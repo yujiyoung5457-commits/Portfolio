@@ -53,12 +53,20 @@ export function Skills() {
               className={styles.skillImage}
               src={skill.image}
               alt={skill.name}
-              width={1536}
-              height={1024}
+              fill
+              sizes="(max-width: 520px) 30vw, 18vw"
             />
           </div>
         ))}
       </div>
+
+      <Image
+        className={styles.palette}
+        src="/palet.png"
+        alt=""
+        width={1555}
+        height={1012}
+      />
     </section>
   );
 }

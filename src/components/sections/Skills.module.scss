@@ -1,9 +1,12 @@
 .section {
   /* 튜브 배치 조절값 */
-  --tube-width: clamp(300px, 24vw, 440px);
+  --tube-width: clamp(120px, 18vw, 340px);
   --tube-list-left: clamp(52px, 7vw, 130px);
   --tube-list-top: clamp(300px, 34svh, 390px);
   --tube-gap: clamp(10px, 1.6vh, 25px);
+  --palette-width: clamp(300px, 40vw, 760px);
+  --palette-right: -7%;
+  --palette-top: clamp(760px, 112svh, 1120px);
 
   position: relative;
   z-index: 2;
@@ -67,18 +70,21 @@
 .skillRow {
   position: relative;
   width: 100%;
-  aspect-ratio: 2.55 / 1;
-  overflow: hidden;
+  aspect-ratio: 1094 / 455;
 }
 
 .skillImage {
+  object-fit: contain;
+  object-position: left center;
+}
+
+.palette {
   position: absolute;
-  top: 50%;
-  left: 0;
-  width: 142%;
+  z-index: 1;
+  top: var(--palette-top);
+  right: var(--palette-right);
+  width: var(--palette-width);
   height: auto;
-  max-width: none;
-  transform: translateY(-50%);
 }
 
 @media (max-width: 800px) {
@@ -98,9 +104,15 @@
   }
 
   .skillList {
-    --tube-width: min(58vw, 390px);
+    --tube-width: min(28vw, 250px);
     --tube-list-left: 7vw;
     --tube-list-top: 300px;
+  }
+
+  .palette {
+    --palette-width: min(52vw, 440px);
+    --palette-right: -10%;
+    --palette-top: 660px;
   }
 }
 
@@ -125,9 +137,15 @@
   }
 
   .skillList {
-    --tube-width: min(72vw, 320px);
+    --tube-width: min(30vw, 150px);
     --tube-list-left: 5vw;
     --tube-list-top: 250px;
     --tube-gap: 10px;
+  }
+
+  .palette {
+    --palette-width: 48vw;
+    --palette-right: -12%;
+    --palette-top: 560px;
   }
 }
