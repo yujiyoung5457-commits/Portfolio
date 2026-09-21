@@ -1,0 +1,158 @@
+.section {
+  /* 마지막 Movie 섹션의 전체 세로 길이 */
+  --movie-section-height: max(300svh, 980px);
+  // height: 600vh;
+  position: relative;
+  height: var(--movie-section-height);
+  overflow: hidden;
+  scroll-margin-top: var(--header-height);
+  background: var(--color-blue);
+}
+
+.intro {
+  position: relative;
+  height: 38%;
+  min-height: 360px;
+}
+
+.squiggle {
+  position: absolute;
+  top: 3%;
+  left: 0;
+  width: 100%;
+  height: clamp(70px, 10vw, 150px);
+  overflow: visible;
+  fill: none;
+  stroke: #e7ff4d;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 12;
+}
+
+.logo {
+  position: absolute;
+  bottom: 7%;
+  left: 7%;
+  width: min(52vw, 720px);
+  height: auto;
+}
+
+.heroCats {
+  position: absolute;
+  right: 8%;
+  bottom: 2%;
+  width: min(22vw, 310px);
+  height: auto;
+}
+
+.movieFrame {
+  position: relative;
+  height: 34%;
+  min-height: 330px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 75% 18%, rgb(255 255 255 / 0.9), transparent 18%),
+    linear-gradient(165deg, #d9f4ff 0%, #bcdfff 42%, #9cc8ff 68%, #d9ecff 100%);
+}
+
+.movieCat {
+  position: absolute;
+}
+
+.movieCat img {
+  object-fit: contain;
+}
+
+.movieCatLarge {
+  bottom: -18%;
+  left: -5%;
+  width: 46%;
+  aspect-ratio: 450 / 536;
+}
+
+.movieCatMedium {
+  right: 22%;
+  bottom: -17%;
+  width: 31%;
+  aspect-ratio: 450 / 536;
+}
+
+.movieCatSmall {
+  right: -3%;
+  bottom: -14%;
+  width: 22%;
+  aspect-ratio: 450 / 536;
+}
+
+.contactDisc {
+  position: absolute;
+  bottom: min(-42vw, -390px);
+  left: 50%;
+  width: min(94vw, 1180px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--color-yellow) url("/section01_background03.png") center / cover;
+  transform: translateX(-50%);
+}
+
+.contactText {
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  display: flex;
+  width: 84%;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(12px, 1.3vw, 22px);
+  color: var(--color-blue);
+  font-family: var(--font-anton), Impact, sans-serif;
+  font-size: clamp(1.4rem, 2.5vw, 2.8rem);
+  text-align: center;
+  transform: translateX(-50%);
+}
+
+.contactText a {
+  color: inherit;
+  text-decoration: none;
+}
+
+@media (max-width: 700px) {
+  .section {
+    --movie-section-height: max(115svh, 820px);
+  }
+
+  .intro {
+    min-height: 285px;
+  }
+
+  .squiggle {
+    top: 0;
+    height: 78px;
+    stroke-width: 10;
+  }
+
+  .logo {
+    bottom: 5%;
+    left: 6%;
+    width: 61vw;
+  }
+
+  .heroCats {
+    right: 5%;
+    width: 25vw;
+  }
+
+  .movieFrame {
+    min-height: 280px;
+  }
+
+  .contactDisc {
+    bottom: -31vw;
+    width: 108vw;
+  }
+
+  .contactText {
+    top: 14%;
+    font-size: clamp(1rem, 4.2vw, 1.5rem);
+  }
+}

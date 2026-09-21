@@ -1,0 +1,117 @@
+.section {
+  position: relative;
+  display: grid;
+  min-height: max(calc(200svh - var(--header-height)), 760px);
+  place-items: center;
+  overflow: hidden;
+  background: var(--color-blue);
+  isolation: isolate;
+}
+
+.title {
+  position: absolute;
+  z-index: 2;
+  top: clamp(34px, 6vh, 70px);
+  left: clamp(34px, 7vw, 110px);
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: end;
+  margin: 0;
+  font-family: var(--font-anton), Impact, sans-serif;
+  font-size: clamp(2.5rem, 5vw, 5.2rem);
+  font-weight: 400;
+  line-height: 0.92;
+}
+
+.where {
+  color: var(--color-yellow);
+}
+
+.design {
+  margin-left: 0.18em;
+  color: var(--color-red);
+}
+
+.meets {
+  color: var(--color-teal);
+}
+
+.code {
+  grid-row: 2 / 4;
+  margin-left: 0.12em;
+  color: var(--color-yellow);
+  font-size: 1.65em;
+  line-height: 0.8;
+}
+
+.flower {
+  position: relative;
+  width: min(76vw, 740px);
+  aspect-ratio: 1;
+  background-image: url("/section01_background05.png");
+  background-position: center;
+  background-size: cover;
+  -webkit-mask-image: url("/pt_img/flower_nomal.svg");
+  -webkit-mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-image: url("/pt_img/flower_nomal.svg");
+  mask-position: center;
+  mask-repeat: no-repeat;
+  mask-size: contain;
+  transform: translateY(8%);
+}
+
+.modelStage {
+  position: absolute;
+  top: 58%;
+  left: 50%;
+  display: grid;
+  width: clamp(92px, 12vw, 130px);
+  aspect-ratio: 1;
+  place-items: center;
+  padding: 12px;
+  background: #e7e7e7;
+  color: var(--color-ink);
+  font-size: clamp(0.9rem, 1.6vw, 1.3rem);
+  font-weight: 700;
+  line-height: 1.22;
+  text-align: center;
+  transform: translate(-50%, -50%);
+}
+
+@media (max-width: 700px) {
+  .section {
+    min-height: 760px;
+  }
+
+  .title {
+    top: 44px;
+    left: 8%;
+    font-size: clamp(2.4rem, 10vw, 4.4rem);
+  }
+
+  .flower {
+    width: min(94vw, 610px);
+    transform: translateY(10%);
+  }
+}
+
+@media (max-width: 430px) {
+  .section {
+    min-height: 680px;
+  }
+
+  .title {
+    font-size: 2.35rem;
+  }
+
+  .flower {
+    width: 112vw;
+  }
+
+  .modelStage {
+    width: 86px;
+    font-size: 0.82rem;
+  }
+}
