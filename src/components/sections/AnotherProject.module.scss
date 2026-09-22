@@ -1,21 +1,47 @@
 .section {
   position: relative;
-  min-height: max(calc(300svh - var(--header-height)), 820px);
+  min-height: max(calc(290svh - var(--header-height)), 820px);
   overflow: hidden;
   scroll-margin-top: var(--header-height);
   background: var(--color-blue);
   isolation: isolate;
+  // border: 1px solid rgb(255, 0, 234);
+}
+
+.wave {
+  position: absolute;
+  z-index: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 40%;
+  overflow: hidden;
+  background: #ffaa00;
+}
+
+.waveImage {
+  position: absolute;
+  top: -15px;
+  right: -4px;
+  bottom: -4px;
+  left: -4px;
+  width: calc(100% + 8px);
+  max-width: none;
+  height: calc(100% + 8px);
+  object-fit: fill;
 }
 
 .title {
   position: absolute;
   z-index: 2;
   top: clamp(34px, 6vh, 68px);
-  left: clamp(34px, 7vw, 112px);
+  left: 10rem;
   margin: 0;
   color: var(--color-yellow);
   font-family: var(--font-anton), Impact, sans-serif;
-  font-size: clamp(3.6rem, 7.5vw, 7.5rem);
+  font-size:9.3rem;
   font-weight: 400;
   line-height: 0.9;
   text-transform: uppercase;
@@ -24,25 +50,27 @@
 .artwork {
   position: absolute;
   z-index: 2;
-  top: 15%;
+  top: 12%;
   right: clamp(44px, 9vw, 150px);
-  width: clamp(190px, 23vw, 350px);
+  width: 25rem;
   height: auto;
 }
 
 .projectCard,
 .nextProject {
   position: absolute;
-  border: clamp(11px, 1.4vw, 20px) dashed var(--color-red);
+  border: clamp(20px, 1.4vw, 30px) dashed var(--color-red);
   border-radius: 50%;
   background: var(--color-yellow);
+
 }
 
 .projectCard {
+  top: 16%;
   bottom: 8%;
   left: clamp(-84px, -4vw, -20px);
   display: flex;
-  width: clamp(440px, 50vw, 760px);
+   width: 80rem;
   aspect-ratio: 1;
   flex-direction: column;
   align-items: center;
@@ -50,7 +78,7 @@
 }
 
 .imagePlaceholder {
-  width: 73%;
+  width: 95%;
   aspect-ratio: 1;
   flex: 0 0 auto;
   border-radius: 50%;
@@ -61,7 +89,7 @@
   margin: 3% 0 0;
   color: var(--color-blue);
   font-family: var(--font-oleo-script), cursive;
-  font-size: clamp(2.2rem, 4.5vw, 4.8rem);
+  font-size: clamp(2.2rem, 4.5vw, 5rem);
   font-weight: 700;
   line-height: 0.88;
   text-align: center;
@@ -84,9 +112,51 @@
   background: rgb(252 246 235 / 0.24);
 }
 
+.projectCard02 {
+  top: calc(30% + 30rem);
+  left: calc(clamp(-84px, -4vw, -20px) + 80rem + clamp(16px, 2vw, 32px));
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  width: 35rem;
+  aspect-ratio: 1;
+  flex-direction: column;
+  align-items: center;
+  padding: 7% 9% 8%;
+}
+
+.projectCardBackground02 {
+  z-index: 0;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.imagePlaceholder02 {
+  z-index: 1;
+  width: 150%;
+  aspect-ratio: 1;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: var(--color-cream);
+}
+
+.projectCard02 h3 {
+  z-index: 1;
+  margin: 3% 0 0;
+  color: var(--color-blue);
+  font-family: var(--font-oleo-script), cursive;
+  font-size: clamp(1.25rem, 1.8vw, 2rem);
+  font-weight: 700;
+  line-height: 0.88;
+  text-align: center;
+}
 @media (max-width: 800px) {
   .section {
     min-height: 860px;
+  }
+
+  .wave {
+    height: 32%;
   }
 
   .title {
@@ -105,6 +175,12 @@
     width: min(72vw, 570px);
   }
 
+  .projectCard02 {
+    top: calc(16% + min(21vw, 175px));
+    left: calc(-10% + min(72vw, 570px) + 12px);
+    width: min(30vw, 220px);
+  }
+
   .nextProject {
     right: -16%;
     width: min(38vw, 310px);
@@ -114,6 +190,10 @@
 @media (max-width: 520px) {
   .section {
     min-height: 760px;
+  }
+
+  .wave {
+    height: 29%;
   }
 
   .title {
@@ -132,6 +212,16 @@
     bottom: 11%;
     left: -19%;
     width: 88vw;
+  }
+
+  .projectCard02 {
+    top: calc(16% + 28vw);
+    left: calc(-19% + 88vw + 10px);
+    width: 32vw;
+  }
+
+  .projectCard02 h3 {
+    font-size: clamp(0.8rem, 3.5vw, 1.15rem);
   }
 
   .projectCard h3 {

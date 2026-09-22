@@ -1,15 +1,10 @@
 .section {
-  /* 추후 슬라이드 애니메이션에 사용할 전체 스크롤 길이 */
-  // --art-slider-height: 500vh;
-  height: 500vh;
-  position: relative;
-  // height: var(--art-slider-height);
+  min-height: calc(100svh - var(--header-height));
   background: var(--color-blue);
 }
 
 .stickyStage {
-  position: sticky;
-  top: var(--header-height);
+  position: relative;
   height: calc(100svh - var(--header-height));
   overflow: hidden;
   background: var(--color-blue);
@@ -28,6 +23,7 @@
   text-align: center;
   text-transform: uppercase;
   transform: translateX(-50%);
+  padding: 10rem 0;
 }
 
 .heading > span {

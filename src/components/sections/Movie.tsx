@@ -31,15 +31,16 @@ export function Movie() {
       </div>
 
       <div className={styles.movieFrame} aria-label="Movie preview">
-        <div className={`${styles.movieCat} ${styles.movieCatLarge}`}>
-          <Image src="/pt_img/simusimu-hae-neko.png" alt="" fill sizes="42vw" />
-        </div>
-        <div className={`${styles.movieCat} ${styles.movieCatMedium}`}>
-          <Image src="/pt_img/simusimu-hae-neko.png" alt="" fill sizes="28vw" />
-        </div>
-        <div className={`${styles.movieCat} ${styles.movieCatSmall}`}>
-          <Image src="/pt_img/simusimu-hae-neko.png" alt="" fill sizes="18vw" />
-        </div>
+        <video
+          className={styles.movie}
+          src="/simusimu-hae.mp4"
+          aria-label="Movie preview"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+        />
       </div>
 
       <div className={styles.contactDisc}>

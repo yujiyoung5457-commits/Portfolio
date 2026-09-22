@@ -29,11 +29,17 @@
 .button:focus-visible {
   z-index: 2;
   filter: drop-shadow(0 9px 12px rgb(24 24 24 / 0.28));
-  transform: rotate(-180deg) scale(1.08);
+  transform: scale(1.08);
 }
 
 .image {
   object-fit: contain;
+  transition: transform 500ms ease;
+}
+
+.button:hover .image,
+.button:focus-visible .image {
+  transform: rotate(-180deg);
 }
 
 .button span {

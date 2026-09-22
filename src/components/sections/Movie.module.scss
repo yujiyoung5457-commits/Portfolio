@@ -50,9 +50,14 @@
   height: 34%;
   min-height: 330px;
   overflow: hidden;
-  background:
-    radial-gradient(circle at 75% 18%, rgb(255 255 255 / 0.9), transparent 18%),
-    linear-gradient(165deg, #d9f4ff 0%, #bcdfff 42%, #9cc8ff 68%, #d9ecff 100%);
+  background-color:var(--color-teal);
+}
+
+.movie {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
 }
 
 .movieCat {
@@ -88,7 +93,7 @@
   position: absolute;
   bottom: min(-42vw, -390px);
   left: 50%;
-  width: min(94vw, 1180px);
+  width: min(94vw, 1300px);
   aspect-ratio: 1;
   border-radius: 50%;
   background: var(--color-yellow) url("/section01_background03.png") center / cover;

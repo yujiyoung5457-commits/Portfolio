@@ -59,12 +59,13 @@
 .skillList {
   position: absolute;
   z-index: 2;
-  top: var(--tube-list-top);
-  left: var(--tube-list-left);
+  top: 42%;
+  left:8%;
   display: flex;
-  width: var(--tube-width);
+  width: 25rem;
   flex-direction: column;
-  gap: var(--tube-gap);
+  gap: 4rem;
+  border: 1px solid rgb(0, 255, 200);
 }
 
 .skillRow {
@@ -81,9 +82,9 @@
 .palette {
   position: absolute;
   z-index: 1;
-  top: var(--palette-top);
+  top:90%;
   right: var(--palette-right);
-  width: var(--palette-width);
+  width: 32rem;
   height: auto;
 }
 
