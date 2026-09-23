@@ -184,14 +184,14 @@ export function FeaturedProjects() {
       })
       .to(scrollPosition, {
         y: reboundY,
-        duration: 2,
-        ease: "power3.out",
+        duration: 2.15,
+        ease: "sine.inOut",
         onUpdate: () => window.scrollTo(0, scrollPosition.y),
       })
       .to(scrollPosition, {
         y: teamProjectY,
-        duration: 0.32,
-        ease: "power2.inOut",
+        duration: 0.46,
+        ease: "sine.inOut",
         onUpdate: () => window.scrollTo(0, scrollPosition.y),
         onComplete: () => window.dispatchEvent(new Event("team-project-reveal")),
       });
