@@ -8,7 +8,8 @@
   width: 100%;
   height: auto;
   aspect-ratio: 7078.38 / 1925.03;
-  margin-bottom: -2px;
+  margin-bottom: -3px;
+  vertical-align: top;
 }
 
 .stickyStage {
@@ -72,15 +73,18 @@
   inset: 0;
   width: 100%;
   height: 100%;
+  overflow: hidden;
   list-style: none;
-  border-radius: 10px;
-  background: #969696;
+  border-radius: 14px;
+  background: #000;
+  box-shadow: 0 12px 34px rgb(0 0 0 / 0.25);
   will-change: transform, opacity;
 }
 
-.card:nth-child(even) {
-  background: #b8b8b8;
-  box-shadow: 0 12px 34px rgb(0 0 0 / 0.25);
+.cardImage {
+  border-radius: inherit;
+  object-fit: contain;
+  object-position: center;
 }
 
 .actions {
@@ -114,21 +118,32 @@
 }
 
 @media (max-width: 700px) {
+  .stickyStage {
+    height: 760px;
+    min-height: calc(100svh - var(--header-height));
+  }
+
   .heading {
-    top: 7%;
-    gap: 18px;
+    top: 5%;
+    width: min(92vw, 430px);
+    justify-content: center;
+    gap: 12px;
   }
 
   .heading > span {
-    font-size: 4.8rem;
+    font-size: clamp(4rem, 18vw, 6rem);
   }
 
   .heading h2 {
-    font-size: 1.65rem;
+    font-size: clamp(1.6rem, 7vw, 2.3rem);
   }
 
   .cards {
-    top: 58%;
-    width: 80vw;
+    top: 57%;
+    width: min(74vw, 360px);
+  }
+
+  .actions {
+    bottom: 24px;
   }
 }

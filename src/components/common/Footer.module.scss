@@ -5,18 +5,28 @@
   font-size: 1.4rem;
   color: var(--color-blue);
   font-family: var(--font-anton), Impact, sans-serif;
+  padding: 0 12rem;
+ 
+
 }
 
 .inner {
   display: flex;
-  width: min(var(--content-width), calc(100% - (var(--page-gutter) * 2)));
+  // width: min(var(--content-width), calc(100% - (var(--page-gutter) * 2)));
+  
   min-height: 230px;
   align-items: center;
   justify-content: space-between;
   gap: 60px;
   margin-inline: auto;
 }
-
+.txtBox{
+  display: flex;
+  flex-direction: column;
+}
 .inner a {
   color: var(--color-yellow);
+}
+.inner p {
+  font-size: 1rem;
 }

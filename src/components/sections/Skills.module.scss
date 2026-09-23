@@ -54,6 +54,35 @@
   width: clamp(360px, 39vw, 800px);
   height: auto;
   transform: rotate(12deg);
+  animation: movingArtwork 2s infinite ;
+}
+@keyframes movingArtwork{
+  0%{
+    background-image: url(/public/cloud01.svg);
+    // width: 20%;
+    transform: rotate(-10deg);
+
+  }
+  20%{
+    background-image: url(/public/cloud02.svg);
+    transform: rotate(10deg);
+  }
+  40%{
+    background-image: url(/public/cloud03.svg);
+    transform: rotate(-20deg);
+  }
+  60%{
+    background-image: url(/public/cloud02.svg);
+    transform: rotate(-25);
+  }
+  80%{
+    background-image: url(/public/cloud03.svg);
+    transform: rotate(15deg);
+  }
+  100%{
+    background-image: url(/public/cloud01.svg);
+    transform: rotate(-10deg);
+  }
 }
 
 .skillList {

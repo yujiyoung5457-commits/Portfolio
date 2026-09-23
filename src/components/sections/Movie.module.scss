@@ -33,15 +33,50 @@
   position: absolute;
   bottom: 7%;
   left: 7%;
-  width: min(52vw, 720px);
+  width: min(52vw, 750px);
   height: auto;
+  animation: heartbeat 2.7s infinite;
+}
+@-webkit-keyframes heartbeat {
+  from {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    -webkit-transform-origin: center center;
+            transform-origin: center center;
+    -webkit-animation-timing-function: ease-out;
+            animation-timing-function: ease-out;
+  }
+  10% {
+    -webkit-transform: scale(0.91);
+            transform: scale(0.91);
+    -webkit-animation-timing-function: ease-in;
+            animation-timing-function: ease-in;
+  }
+  17% {
+    -webkit-transform: scale(0.98);
+            transform: scale(0.98);
+    -webkit-animation-timing-function: ease-out;
+            animation-timing-function: ease-out;
+  }
+  33% {
+    -webkit-transform: scale(0.87);
+            transform: scale(0.87);
+    -webkit-animation-timing-function: ease-in;
+            animation-timing-function: ease-in;
+  }
+  45% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    -webkit-animation-timing-function: ease-out;
+            animation-timing-function: ease-out;
+  }
 }
 
 .heroCats {
   position: absolute;
-  right: 8%;
+  right: 5%;
   bottom: 2%;
-  width: min(22vw, 310px);
+  width: min(25vw, 550px);
   height: auto;
 }
 
@@ -96,7 +131,7 @@
   width: min(94vw, 1300px);
   aspect-ratio: 1;
   border-radius: 50%;
-  background: var(--color-yellow) url("/section01_background03.png") center / cover;
+  background: var(--color-yellow) url("/section01_background03.webp") center / cover;
   transform: translateX(-50%);
 }
 
@@ -139,7 +174,7 @@
   .logo {
     bottom: 5%;
     left: 6%;
-    width: 61vw;
+    width: 65vw;
   }
 
   .heroCats {
@@ -159,5 +194,53 @@
   .contactText {
     top: 14%;
     font-size: clamp(1rem, 4.2vw, 1.5rem);
+  }
+}
+
+@media (max-width: 700px) {
+  .section {
+    --movie-section-height: 1200px;
+  }
+
+  .intro {
+    height: 330px;
+  }
+
+  .movieFrame {
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    aspect-ratio: 16 / 9;
+  }
+
+  .contactDisc {
+    bottom: -56vw;
+    width: 132vw;
+  }
+}
+
+@media (max-width: 430px) {
+  .section {
+    --movie-section-height: 1080px;
+  }
+
+  .intro {
+    height: 300px;
+  }
+
+  .logo {
+    bottom: 8%;
+    width: 68vw;
+  }
+
+  .heroCats {
+    right: 2%;
+    bottom: 4%;
+    width: 29vw;
+  }
+
+  .contactDisc {
+    bottom: -58vw;
+    width: 145vw;
   }
 }

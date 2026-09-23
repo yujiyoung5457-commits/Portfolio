@@ -32,7 +32,7 @@ export function AboutMe() {
     <section className={styles.section} id="about" aria-labelledby="about-title">
       <Image
         className={styles.background}
-        src="/section01_background03.png"
+        src="/section01_background03.webp"
         alt=""
         fill
         sizes="100vw"

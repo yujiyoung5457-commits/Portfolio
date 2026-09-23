@@ -16,14 +16,14 @@ export function Movie() {
 
         <Image
           className={styles.logo}
-          src="/pt_img/simusimu-hae.png"
+          src="/pt_img/simusimu-hae.webp"
           alt="Simu Simu Hae"
           width={1466}
           height={760}
         />
         <Image
           className={styles.heroCats}
-          src="/pt_img/simusimu-hae-neko.png"
+          src="/honya.png"
           alt=""
           width={450}
           height={536}

@@ -4,8 +4,14 @@ export function Footer() {
   return (
     <footer className={styles.footer}>
       <div className={styles.inner}>
-        <span>© {new Date().getFullYear()} Portfolio-Yu Jiyeong</span>
-        <a href="#home">Back to top ↑</a>
+        <div className={styles.txtBox}>
+          <span>© {new Date().getFullYear()}Yu Jiyeong. All Rights Reserved.</span>
+          {/* <br /> */}
+          <span>THANKS FOR VISITING.</span>
+        </div>
+
+
+        <p>ORIGINAL WORKS MAY NOT BE REPRODUCED WITHOUT PERMISSION.</p>
       </div>
     </footer>
   );

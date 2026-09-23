@@ -5,21 +5,42 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import { useLayoutEffect, useRef } from "react";
+import { createHeroVortex } from "./heroVortex";
 import styles from "./Hero.module.scss";
 
 const introBackgrounds = [
-  "/section01_background_01.png",
-  "/section01_background_02.png",
-  "/section01_background_03.png",
-  "/section01_background_04.png",
-  "/section01_background_05.png",
-  "/section01_background_06.png",
+  "/heromain_1.webp",
+  "/heromain_2.webp",
+  "/heromain_3.webp",
+  "/heromain_4.webp",
+  "/heromain_5.webp",
+  "/heromain_6.webp",
 ];
 
 export function Hero() {
   const heroRef = useRef<HTMLElement>(null);
   const introPanelRef = useRef<HTMLDivElement>(null);
   const backgroundRefs = useRef<(HTMLImageElement | null)[]>([]);
+  const vortexCanvasRef = useRef<HTMLCanvasElement>(null);
+  const vortexRenderRef = useRef<(progress: number) => void>(() => undefined);
+  const vortexSupportedRef = useRef(false);
+
+  useLayoutEffect(() => {
+    const canvas = vortexCanvasRef.current;
+
+    if (!canvas) return;
+
+    const vortex = createHeroVortex(canvas, "/heromain_6.webp");
+    vortexSupportedRef.current = vortex !== null;
+
+    if (vortex) vortexRenderRef.current = vortex.render;
+
+    return () => {
+      vortex?.dispose();
+      vortexRenderRef.current = () => undefined;
+      vortexSupportedRef.current = false;
+    };
+  }, []);
 
   useLayoutEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -28,29 +49,54 @@ export function Hero() {
       const frames = backgroundRefs.current.filter(
         (frame): frame is HTMLImageElement => frame !== null,
       );
+      const vortexCanvas = vortexCanvasRef.current;
 
       gsap.set(frames, { autoAlpha: 0 });
       gsap.set(frames[0], { autoAlpha: 1 });
+      gsap.set(vortexCanvas, { autoAlpha: 0 });
 
-      const timeline = gsap.timeline({
-        defaults: { ease: "none" },
-        scrollTrigger: {
-          trigger: introPanelRef.current,
-          start: "top top",
-          end: "+=500%",
-          pin: true,
-          scrub: 0.65,
-          anticipatePin: 1,
+      let activeFrame = 0;
+
+      const showFrame = (index: number) => {
+        if (index === activeFrame) return;
+
+        gsap.set(frames, { autoAlpha: 0 });
+        gsap.set(frames[index], { autoAlpha: 1 });
+        activeFrame = index;
+      };
+
+      ScrollTrigger.create({
+        trigger: introPanelRef.current,
+        start: "top top",
+        end: "+=600%",
+        pin: true,
+        anticipatePin: 1,
+        onUpdate: (self) => {
+          const index = Math.min(
+            frames.length - 1,
+            Math.floor(self.progress * (frames.length + 1)),
+          );
+          const vortexProgress = gsap.utils.clamp(
+            0,
+            1,
+            (self.progress - frames.length / (frames.length + 1)) *
+              (frames.length + 1),
+          );
+
+          showFrame(index);
+          vortexRenderRef.current(vortexProgress);
+
+          if (vortexSupportedRef.current) {
+            gsap.set(vortexCanvas, { autoAlpha: vortexProgress > 0 ? 1 : 0 });
+          } else {
+            gsap.set(frames.at(-1) ?? null, {
+              scale: 1 - vortexProgress * 0.92,
+              rotation: vortexProgress * 540,
+              autoAlpha: 1 - vortexProgress,
+            });
+          }
         },
       });
-
-      for (let index = 1; index < frames.length; index += 1) {
-        const changeAt = index;
-
-        timeline
-          .to(frames[index - 1], { autoAlpha: 0, duration: 0.22 }, changeAt)
-          .to(frames[index], { autoAlpha: 1, duration: 0.22 }, changeAt);
-      }
     }, heroRef);
 
     return () => context.revert();
@@ -73,10 +119,17 @@ export function Hero() {
               loading={index === 0 ? undefined : "eager"}
               quality={100}
               sizes="100vw"
+              unoptimized
               key={src}
             />
           ))}
         </div>
+
+        <canvas
+          ref={vortexCanvasRef}
+          className={styles.vortexCanvas}
+          aria-hidden="true"
+        />
 
         <h1 className={`${styles.title} ${styles.developer}`} id="hero-title">
           Frontend Developer
@@ -95,7 +148,7 @@ export function Hero() {
       <div className={`${styles.panel} ${styles.canvasPanel}`}>
         <Image
           className={styles.background02}
-          src="/section01_background02.png"
+          src="/section01_background02.webp"
           alt="사이로 바다가 보이는 파란색과 노란색 곡선 천장의 실내 공간"
           fill
           quality={100}

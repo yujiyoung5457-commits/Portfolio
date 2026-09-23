@@ -2,14 +2,19 @@
 
 import { gsap } from "gsap";
 import { Draggable } from "gsap/Draggable";
+import Image from "next/image";
 import { useEffect, useRef } from "react";
 import styles from "./ArtSlider.module.scss";
 
-const CARD_COUNT = 3;
+const SLIDER_IMAGES = Array.from(
+  { length: 19 },
+  (_, index) => `/artwork/slider_img/${index + 1}.webp`,
+);
 
 export function ArtSlider() {
   const powerTopRef = useRef<HTMLCanvasElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
+  const headingRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<HTMLUListElement>(null);
   const dragProxyRef = useRef<HTMLDivElement>(null);
   const previousButtonRef = useRef<HTMLButtonElement>(null);
@@ -61,6 +66,69 @@ export function ArtSlider() {
   }, []);
 
   useEffect(() => {
+    const heading = headingRef.current;
+
+    if (!heading) return;
+
+    const title = heading.querySelector("h2");
+    const braces = Array.from(heading.querySelectorAll(":scope > span"));
+    const [leftBrace, rightBrace] = braces;
+
+    if (!title || !leftBrace || !rightBrace) return;
+
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let timeline: gsap.core.Timeline | undefined;
+    let observer: IntersectionObserver | undefined;
+
+    const context = gsap.context(() => {
+      if (reduceMotion.matches) {
+        gsap.set([leftBrace, title, rightBrace], { clearProps: "all" });
+        return;
+      }
+
+      const titleWidth = title.getBoundingClientRect().width;
+      const columnGap = Number.parseFloat(getComputedStyle(heading).columnGap) || 0;
+      const braceShift = titleWidth / 2 + columnGap / 2;
+
+      gsap.set(leftBrace, { x: braceShift, transformOrigin: "center" });
+      gsap.set(rightBrace, { x: -braceShift, transformOrigin: "center" });
+      gsap.set(title, {
+        clipPath: "inset(0 50% 0 50%)",
+      });
+
+      observer = new IntersectionObserver(
+        ([entry]) => {
+          if (!entry.isIntersecting) return;
+
+          observer?.disconnect();
+          timeline = gsap.timeline();
+          timeline
+            .to(
+              [leftBrace, rightBrace],
+              { x: 0, duration: 2.2, ease: "power3.inOut" },
+              0,
+            )
+            .to(
+              title,
+              { clipPath: "inset(0 0% 0 0%)", duration: 1.7, ease: "power3.inOut" },
+              0.35,
+            );
+        },
+        { threshold: 0.35 },
+      );
+
+      observer.observe(heading);
+
+    }, heading);
+
+    return () => {
+      observer?.disconnect();
+      timeline?.kill();
+      context.revert();
+    };
+  }, []);
+
+  useEffect(() => {
     const stage = stageRef.current;
     const cardsList = cardsRef.current;
     const dragProxy = dragProxyRef.current;
@@ -72,28 +140,36 @@ export function ArtSlider() {
     gsap.registerPlugin(Draggable);
 
     const cards = Array.from(cardsList.children) as HTMLElement[];
-    let activeIndex = 0;
+    // 첫 화면: 왼쪽 1번, 가운데 2번, 오른쪽 3번
+    let activeIndex = 1;
     let cleanupInteractions = () => {};
 
     const context = gsap.context(() => {
       const renderCards = (animate: boolean) => {
         cards.forEach((card, index) => {
-          const relativeIndex = (index - activeIndex + cards.length) % cards.length;
+          const previousIndex = gsap.utils.wrap(0, cards.length, activeIndex - 1);
+          const nextIndex = gsap.utils.wrap(0, cards.length, activeIndex + 1);
+          const isVisible =
+            index === activeIndex || index === previousIndex || index === nextIndex;
           const position =
-            relativeIndex === 0
+            index === activeIndex
               ? { xPercent: 0, scale: 1, zIndex: 3 }
-              : relativeIndex === 1
+              : index === nextIndex
                 ? { xPercent: 82, scale: 0.9, zIndex: 2 }
-                : { xPercent: -82, scale: 0.9, zIndex: 2 };
+                : index === previousIndex
+                  ? { xPercent: -82, scale: 0.9, zIndex: 2 }
+                  : { xPercent: 0, scale: 0.82, zIndex: 0 };
 
           const properties = {
             ...position,
             x: 0,
-            autoAlpha: 1,
+            autoAlpha: isVisible ? 1 : 0,
             duration: animate ? 0.55 : 0,
             ease: "power3.out",
             overwrite: true,
           };
+
+          card.setAttribute("aria-hidden", String(!isVisible));
 
           if (animate) {
             gsap.to(card, properties);
@@ -159,7 +235,7 @@ export function ArtSlider() {
       />
 
       <div ref={stageRef} className={styles.stickyStage}>
-        <div className={styles.heading}>
+        <div ref={headingRef} className={styles.heading}>
           <span aria-hidden="true">&#123;</span>
           <h2 id="art-slider-title">
             Art Work
@@ -173,8 +249,16 @@ export function ArtSlider() {
 
         <div className={styles.gallery}>
           <ul ref={cardsRef} className={styles.cards} aria-label="작품 슬라이드">
-            {Array.from({ length: CARD_COUNT }, (_, index) => (
-              <li key={index} className={styles.card} aria-label={`작품 ${index + 1}`} />
+            {SLIDER_IMAGES.map((src, index) => (
+              <li key={src} className={styles.card} aria-label={`작품 ${index + 1}`}>
+                <Image
+                  className={styles.cardImage}
+                  src={src}
+                  alt={`작품 ${index + 1}`}
+                  fill
+                  sizes="(max-width: 700px) 74vw, 35vw"
+                />
+              </li>
             ))}
           </ul>
 

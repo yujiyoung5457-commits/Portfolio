@@ -4,23 +4,23 @@ import styles from "./Skills.module.scss";
 const skills = [
   {
     name: "React",
-    image: "/pt_img/reactcolor.png",
+    image: "/pt_img/reactcolor.webp",
   },
   {
     name: "TypeScript",
-    image: "/pt_img/ts.png",
+    image: "/pt_img/ts.webp",
   },
   {
     name: "HTML5",
-    image: "/pt_img/htmll.png",
+    image: "/pt_img/htmll.webp",
   },
   {
     name: "CSS3",
-    image: "/pt_img/csscolor.png",
+    image: "/pt_img/csscolor.webp",
   },
   {
     name: "JavaScript",
-    image: "/pt_img/colorjs.png",
+    image: "/pt_img/colorjs.webp",
   },
 ];
 
@@ -62,7 +62,7 @@ export function Skills() {
 
       <Image
         className={styles.palette}
-        src="/palet.png"
+        src="/palet.webp"
         alt=""
         width={1555}
         height={1012}

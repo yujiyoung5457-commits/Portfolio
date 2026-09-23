@@ -25,12 +25,17 @@
 
 @media (max-width: 760px) {
   .heading {
+    top: -8rem;
+    left: 5%;
     font-size: clamp(3rem, 12vw, 6rem);
+    transform: translateY(-50%) rotate(-6deg);
   }
 }
 
 @media (max-width: 480px) {
   .heading {
-    font-size: 1.6rem;
+    top: -5.5rem;
+    left: 4%;
+    font-size: clamp(2.25rem, 11vw, 3.25rem);
   }
 }

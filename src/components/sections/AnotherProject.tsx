@@ -3,7 +3,11 @@ import styles from "./AnotherProject.module.scss";
 
 export function AnotherProject() {
   return (
-    <section className={styles.section} aria-labelledby="another-project-title">
+    <section
+      className={styles.section}
+      id="another-project"
+      aria-labelledby="another-project-title"
+    >
       <div className={styles.wave} aria-hidden="true">
         <Image
           className={styles.waveImage}
@@ -38,7 +42,7 @@ export function AnotherProject() {
       <article className={styles.projectCard02}>
         <Image
           className={styles.projectCardBackground02}
-          src="/section01_background06.png"
+          src="/section01_background06.webp"
           alt=""
           fill
           sizes="(max-width: 520px) 32vw, (max-width: 800px) 30vw, 32rem"

@@ -233,3 +233,48 @@
     width: 52vw;
   }
 }
+
+@media (max-width: 800px) {
+  .section {
+    min-height: 1250px;
+  }
+}
+
+@media (max-width: 520px) {
+  .section {
+    min-height: 1380px;
+  }
+
+  .wave {
+    height: 20%;
+  }
+
+  .artwork {
+    top: 13%;
+  }
+
+  .projectCard {
+    top: 25%;
+    left: 50%;
+    width: min(92vw, 420px);
+    padding: 8% 7% 9%;
+    transform: translateX(-50%);
+  }
+
+  .projectCard02 {
+    top: 63%;
+    left: 50%;
+    width: min(68vw, 300px);
+    transform: translateX(-50%);
+  }
+
+  .imagePlaceholder02 {
+    width: 100%;
+  }
+
+  .nextProject {
+    right: -18%;
+    bottom: -5%;
+    width: min(48vw, 230px);
+  }
+}

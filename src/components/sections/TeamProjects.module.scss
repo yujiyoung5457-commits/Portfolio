@@ -1,9 +1,14 @@
 .section {
+  position: relative;
   min-height: max(calc(120svh - var(--header-height)), 660px);
-  overflow: hidden;
+  overflow: visible;
   scroll-margin-top: var(--header-height);
   background: var(--color-blue);
   color: var(--color-cream);
+}
+
+.section:has(.project:hover) {
+  z-index: 20;
 }
 
 .stage {
@@ -38,6 +43,15 @@
   align-items: center;
 }
 
+.project:hover {
+  z-index: 10;
+}
+
+.projectVisual {
+  transform-origin: center;
+  will-change: transform;
+}
+
 .project1 {
   top: 10%;
   left: -13%;
@@ -54,21 +68,76 @@
 }
 
 .placeholder {
+  position: relative;
   width: clamp(230px, 24vw, 480px);
   aspect-ratio: 1;
-  border: 3px solid rgb(252 246 235 / 0.42);
+  overflow: hidden;
+  // border: 3px solid rgb(252 246 235 / 0.42);
+  background-image: url(/forlog.jpg);
+  background-size: cover;
+  background-position: center;
   border-radius: 50%;
-  background: var(--color-cream);
+  // background: var(--color-cream);
   box-shadow: 0 12px 34px rgb(0 0 0 / 0.18);
+  transform-origin: center;
+  transition: transform 850ms cubic-bezier(0.2, 0.75, 0.2, 1);
+  will-change: transform;
+}
+
+.sitePreview {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 50%;
+  clip-path: circle(0% at 50% 50%);
+  transition: clip-path 900ms cubic-bezier(0.2, 0.75, 0.2, 1);
+}
+
+.sitePreview iframe {
+  width: 250%;
+  height: 250%;
+  border: 0;
+  pointer-events: none;
+  transform: scale(0.4);
+  transform-origin: top left;
+}
+
+.previewLink {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  border-radius: 50%;
+}
+
+.placeholder:focus-within {
+  transform: scale(1.08);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .placeholder:hover {
+    transform: scale(2.3);
+  }
+}
+
+.placeholder:hover .sitePreview,
+.placeholder:focus-within .sitePreview {
+  clip-path: circle(72% at 50% 50%);
 }
 
 .project2 .placeholder {
+   background-image: url(/midnightcord.webp);
+  background-size: cover;
+  background-position: center;
   width: clamp(190px, 20vw, 285px);
-  background: var(--color-cream);
+  // background: var(--color-cream);
 }
 
 .project3 .placeholder {
   width: clamp(240px, 25vw, 800px);
+   background-image: url(/LCODE.png);
+  background-size: cover;
+  background-position: center;
 }
 
 .actions {
@@ -79,17 +148,28 @@
   margin-top: 16px;
 }
 
+.actions a,
 .actions button {
+  display: grid;
+  place-items: center;
   min-width: clamp(94px, 8vw, 120px);
   min-height: 30px;
   padding: 0.8rem 1.8rem;
   border: 0;
   border-radius: 999px;
-  cursor: default;
   font-family: var(--font-anton), Impact, sans-serif;
   font-size: clamp(2rem, 2vw, 3.5rem);
   line-height: 1;
+  text-decoration: none;
   text-transform: uppercase;
+}
+
+.actions a {
+  cursor: pointer;
+}
+
+.actions button {
+  cursor: default;
 }
 
 .liveButton {
@@ -100,6 +180,13 @@
 .githubButton {
   background: var(--color-red);
   color: var(--color-cream);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .placeholder,
+  .sitePreview {
+    transition: none;
+  }
 }
 
 .dot {

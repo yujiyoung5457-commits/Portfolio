@@ -25,23 +25,30 @@ export function ArtGallery() {
       const bounds = canvas.getBoundingClientRect();
       const width = bounds.width;
       const height = bounds.height;
+      const pixelRatio = window.devicePixelRatio || 1;
 
-      canvas.width = Math.round(width);
-      canvas.height = Math.round(height);
+      canvas.width = Math.round(width * pixelRatio);
+      canvas.height = Math.round(height * pixelRatio);
 
       const context = canvas.getContext("2d");
 
       if (!context) return;
 
-      context.setTransform(1, 0, 0, 1, 0, 0);
+      context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
       context.clearRect(0, 0, width, height);
       context.fillStyle =
         getComputedStyle(canvas).getPropertyValue("--color-blue").trim() || "#060a7b";
 
       const sourceWidth = 3012.21;
       const sourceHeight = 11201.24;
-      const lineLeft = width * 0.586;
-      const scaleX = (width * 0.414) / sourceWidth;
+      const curveEndPercent = Number.parseFloat(
+        getComputedStyle(canvas).getPropertyValue("--curve-end-x"),
+      );
+      const curveEndRatio = Number.isFinite(curveEndPercent)
+        ? curveEndPercent / 100
+        : 0.586;
+      const lineLeft = width * curveEndRatio;
+      const scaleX = (width - lineLeft) / sourceWidth;
       const scaleY = height / sourceHeight;
       const x = (value: number) => lineLeft + value * scaleX;
       const y = (value: number) => value * scaleY;
@@ -84,6 +91,10 @@ export function ArtGallery() {
       context.lineTo(width, 0);
       context.closePath();
       context.fill();
+      context.strokeStyle = context.fillStyle;
+      context.lineWidth = 2;
+      context.lineJoin = "round";
+      context.stroke();
     };
 
     const resizeObserver = new ResizeObserver(drawLine);
@@ -104,7 +115,7 @@ export function ArtGallery() {
       <div className={styles.frame1}>
         <div className={`${styles.frame} ${styles.frame1Frame}`}>
           <div className={styles.frameWindow} aria-label="작품 이미지 영역 1" />
-          <Image src="/pt_img/frame02.png" alt="" fill sizes="28vw" />
+          <Image src="/pt_img/frame02.webp" alt="" fill sizes="28vw" />
         </div>
         <ProjectButtons className={styles.frame1Buttons} />
       </div>
@@ -113,7 +124,7 @@ export function ArtGallery() {
       <div className={styles.frame2}>
         <div className={`${styles.frame} ${styles.frame2Frame}`}>
           <div className={styles.frameWindow} aria-label="작품 이미지 영역 2" />
-          <Image src="/pt_img/frame01.png" alt="" fill sizes="65rem" />
+          <Image src="/pt_img/frame01.webp" alt="" fill sizes="65rem" />
         </div>
         <ProjectButtons className={styles.frame2Buttons} />
       </div>
@@ -125,7 +136,7 @@ export function ArtGallery() {
       <div className={styles.frame3}>
         <div className={`${styles.frame} ${styles.frame3Frame}`}>
           <div className={styles.frameWindow} aria-label="작품 이미지 영역 3" />
-          <Image src="/pt_img/frame02.png" alt="" fill sizes="28vw" />
+          <Image src="/pt_img/frame02.webp" alt="" fill sizes="28vw" />
         </div>
         <ProjectButtons className={styles.frame3Buttons} />
       </div>
@@ -140,7 +151,7 @@ export function ArtGallery() {
       <div className={styles.frame4}>
         <div className={`${styles.frame} ${styles.frame4Frame}`}>
           <div className={styles.frameWindow} aria-label="작품 이미지 영역 4" />
-          <Image src="/pt_img/frame02.png" alt="" fill sizes="28vw" />
+          <Image src="/pt_img/frame02.webp" alt="" fill sizes="28vw" />
         </div>
         <ProjectButtons className={styles.frame4Buttons} />
       </div>

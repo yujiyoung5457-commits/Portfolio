@@ -1,5 +1,7 @@
 .section {
   --art-gallery-height: 560vh;
+  // 곡선의 아래쪽 끝점 X 위치(%). 이 값만 바꾸면 곡선 폭과 제어점도 함께 변형됩니다.
+  --curve-end-x: 58.6;
 
   position: relative;
   min-height: var(--art-gallery-height);
@@ -31,15 +33,18 @@
 .line {
   position: absolute;
   z-index: 0;
-  inset: 0;
+  top: -1px;
+  right: -2px;
+  bottom: -1px;
+  left: -1px;
   display: block;
-  width: 100%;
-  height: 100%;
+  width: calc(100% + 3px);
+  height: calc(100% + 2px);
 }
 .textureShape {
   position: absolute;
   z-index: 1;
-  background-image: url("/section01_background04.png");
+  background-image: url("/section01_background04.webp");
   background-position: center;
   background-size: cover;
 }
@@ -337,5 +342,117 @@
   .footerTitle {
     right: 5%;
     gap: 12px;
+  }
+}
+
+// Mobile layout: large absolute-positioned blocks are placed down the page in order.
+@media (max-width: 760px) {
+  .section {
+    --art-gallery-height: 2800px;
+    --curve-end-x: 54;
+  }
+
+  .shape1 {
+    top: 4%;
+    left: 4%;
+    width: 72%;
+    height: 31rem;
+  }
+
+  .shape2 {
+    top: 28%;
+    left: 10%;
+    width: 82%;
+    height: 20rem;
+  }
+
+  .shape3 {
+    top: 51%;
+    left: 48%;
+    width: 47%;
+    height: 29rem;
+  }
+
+  .shape4 {
+    top: 76%;
+    left: 4%;
+    width: 86%;
+    height: 18rem;
+  }
+
+  .frame1 {
+    top: 3%;
+    right: auto;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .frame2 {
+    top: 27%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .frame3 {
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .frame4 {
+    top: 75%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .frame1 .frame1Frame {
+    width: min(72vw, 430px);
+  }
+
+  .frame2 .frame2Frame {
+    width: min(92vw, 650px);
+  }
+
+  .frame3 .frame3Frame {
+    width: min(68vw, 410px);
+  }
+
+  .frame4 .frame4Frame {
+    width: min(70vw, 420px);
+  }
+
+  .buttons > span {
+    min-width: 68px;
+    padding: 0.65rem 1rem;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .section {
+    --art-gallery-height: 2400px;
+    --curve-end-x: 50;
+  }
+
+  .frame1 .frame1Frame {
+    width: 72vw;
+  }
+
+  .frame2 .frame2Frame {
+    width: 94vw;
+  }
+
+  .frame3 .frame3Frame {
+    width: 70vw;
+  }
+
+  .frame4 .frame4Frame {
+    width: 72vw;
+  }
+
+  .buttons > span {
+    min-width: 54px;
+    padding: 0.55rem 0.8rem;
+    font-size: 0.78rem;
   }
 }
