@@ -93,7 +93,8 @@ export function ArtSlider() {
       gsap.set(leftBrace, { x: braceShift, transformOrigin: "center" });
       gsap.set(rightBrace, { x: -braceShift, transformOrigin: "center" });
       gsap.set(title, {
-        clipPath: "inset(0 50% 0 50%)",
+        clipPath: "polygon(50% 0, 50% 0, 50% 100%, 50% 100%)",
+        WebkitClipPath: "polygon(50% 0, 50% 0, 50% 100%, 50% 100%)",
       });
 
       observer = new IntersectionObserver(
@@ -110,7 +111,12 @@ export function ArtSlider() {
             )
             .to(
               title,
-              { clipPath: "inset(0 0% 0 0%)", duration: 1.7, ease: "power3.inOut" },
+              {
+                clipPath: "polygon(0% 0, 100% 0, 100% 100%, 0% 100%)",
+                WebkitClipPath: "polygon(0% 0, 100% 0, 100% 100%, 0% 100%)",
+                duration: 1.7,
+                ease: "power3.inOut",
+              },
               0.35,
             );
         },
