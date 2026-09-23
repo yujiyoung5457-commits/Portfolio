@@ -4,6 +4,7 @@ import { Header } from "@/components/common/Header";
 import { AboutMe } from "@/components/sections/AboutMe";
 import { AnotherProject } from "@/components/sections/AnotherProject";
 import { ArtGallery } from "@/components/sections/ArtGallery";
+import { ArtGalleryHeading } from "@/components/sections/ArtGalleryHeading";
 import { ArtSlider } from "@/components/sections/ArtSlider";
 import { CreativeStatement } from "@/components/sections/CreativeStatement";
 import { DesignCode } from "@/components/sections/DesignCode";
@@ -27,6 +28,7 @@ export default function Home() {
         <Skills />
         <DesignCode />
         <AnotherProject />
+        <ArtGalleryHeading />
         <ArtGallery />
         <ArtSlider />
         <Movie />

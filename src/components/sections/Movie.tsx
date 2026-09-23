@@ -31,15 +31,14 @@ export function Movie() {
       </div>
 
       <div className={styles.movieFrame} aria-label="Movie preview">
-        <video
+        <iframe
           className={styles.movie}
-          src="/simusimu-hae.mp4"
-          aria-label="Movie preview"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
+          src="https://www.youtube.com/embed/ZYUeJoK_saQ?feature=oembed"
+          title="SIMUSIMU-HAE"
+          aria-label="SIMUSIMU-HAE YouTube video"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerPolicy="strict-origin-when-cross-origin"
+          allowFullScreen
         />
       </div>
 
