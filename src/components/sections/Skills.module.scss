@@ -30,8 +30,20 @@
 
 .titleBackground {
   object-fit: contain;
+  clip-path: inset(0 100% 0 0);
   transform: scale(1.6);
-//  position: absolute;
+  will-change: clip-path;
+}
+
+/* 노란 물감이 왼쪽에서 오른쪽으로 차오르는 속도와 방향을 조절합니다. */
+.isPainted .titleBackground {
+  animation: paint-fill-from-left 1.05s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes paint-fill-from-left {
+  0% { clip-path: inset(0 100% 0 0); }
+  72% { clip-path: inset(0 8% 0 0); }
+  100% { clip-path: inset(0 0 0 0); }
 }
 
 .titleGraphic h2 {
@@ -43,8 +55,12 @@
   font-weight: 700;
   line-height: 1;
   text-transform: uppercase;
+  opacity: 0;
   transform: rotate(-8deg) translate(8%, 4%);
 }
+
+.isPainted h2 { animation: skills-word-reveal 360ms 720ms ease-out both; }
+@keyframes skills-word-reveal { to { opacity: 1; } }
 
 .decoration {
   position: absolute;
@@ -127,7 +143,10 @@
     width: min(92vw, 680px);
   }
 
-  .decoration {
+  .isPainted h2 { animation: skills-word-reveal 360ms 720ms ease-out both; }
+@keyframes skills-word-reveal { to { opacity: 1; } }
+
+.decoration {
     top: 27%;
     right: 6%;
     width: min(50vw, 400px);
@@ -161,7 +180,10 @@
     font-size: 4.4rem;
   }
 
-  .decoration {
+  .isPainted h2 { animation: skills-word-reveal 360ms 720ms ease-out both; }
+@keyframes skills-word-reveal { to { opacity: 1; } }
+
+.decoration {
     top: 25%;
     width: 58vw;
   }

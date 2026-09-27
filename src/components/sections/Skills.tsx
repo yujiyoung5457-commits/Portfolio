@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 import styles from "./Skills.module.scss";
 
 const skills = [
@@ -25,9 +28,28 @@ const skills = [
 ];
 
 export function Skills() {
+  const titleGraphicRef = useRef<HTMLDivElement>(null);
+  const [isPainted, setIsPainted] = useState(false);
+
+  useEffect(() => {
+    const titleGraphic = titleGraphicRef.current;
+    if (!titleGraphic) return;
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return;
+      setIsPainted(true);
+      observer.disconnect();
+    }, { threshold: 0.35 });
+
+    observer.observe(titleGraphic);
+    return () => observer.disconnect();
+  }, []);
   return (
     <section className={styles.section} id="skills" aria-labelledby="skills-title">
-      <div className={styles.titleGraphic}>
+      <div
+        ref={titleGraphicRef}
+        className={`${styles.titleGraphic} ${isPainted ? styles.isPainted : ""}`}
+      >
         <Image
           className={styles.titleBackground}
           src="/pt_img/skills.svg"

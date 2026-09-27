@@ -18,7 +18,7 @@ export function DesignCode() {
 
       <div className={styles.flower}>
         <div className={styles.modelStage}>
-          <Scene />
+          <Scene modelPath="/second3D.glb" />
         </div>
       </div>
      

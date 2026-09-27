@@ -8,6 +8,11 @@ import { useLayoutEffect, useRef } from "react";
 import { createHeroVortex } from "./heroVortex";
 import styles from "./Hero.module.scss";
 
+// Hero 스크롤 진행도(0~1) 중 GLB가 급격히 다가오기 시작하는 시점입니다.
+// 값을 높이면 더 마지막에 시작합니다. 예: 0.8 = 마지막 20% 구간부터 시작.
+const MODEL_ZOOM_START = 0.78;
+// 마지막 스크롤 지점의 GLB 확대 배율입니다. 값을 높이면 더 크게 다가옵니다.
+const MODEL_ZOOM_END_SCALE = 3.25;
 const introBackgrounds = [
   "/heromain_1.webp",
   "/heromain_2.webp",
@@ -22,6 +27,7 @@ export function Hero() {
   const introPanelRef = useRef<HTMLDivElement>(null);
   const backgroundRefs = useRef<(HTMLImageElement | null)[]>([]);
   const vortexCanvasRef = useRef<HTMLCanvasElement>(null);
+  const modelStageRef = useRef<HTMLDivElement>(null);
   const vortexRenderRef = useRef<(progress: number) => void>(() => undefined);
   const vortexSupportedRef = useRef(false);
 
@@ -54,6 +60,7 @@ export function Hero() {
       gsap.set(frames, { autoAlpha: 0 });
       gsap.set(frames[0], { autoAlpha: 1 });
       gsap.set(vortexCanvas, { autoAlpha: 0 });
+      gsap.set(modelStageRef.current, { scale: 1 });
 
       let activeFrame = 0;
 
@@ -72,6 +79,16 @@ export function Hero() {
         pin: true,
         anticipatePin: 1,
         onUpdate: (self) => {
+          // 후반부(MODEL_ZOOM_START 이후)부터 가속해 GLB가 앞으로 다가오는 느낌을 만듭니다.
+          const zoomProgress = gsap.utils.clamp(
+            0,
+            1,
+            (self.progress - MODEL_ZOOM_START) / (1 - MODEL_ZOOM_START),
+          );
+          const acceleratedZoom = zoomProgress ** 2;
+          const modelScale = 1 + (MODEL_ZOOM_END_SCALE - 1) * acceleratedZoom;
+          gsap.set(modelStageRef.current, { scale: modelScale });
+          window.dispatchEvent(new CustomEvent("hero-model-zoom", { detail: modelScale }));
           const index = Math.min(
             frames.length - 1,
             Math.floor(self.progress * (frames.length + 1)),
@@ -135,8 +152,8 @@ export function Hero() {
           Frontend Developer
         </h1>
 
-        <div className={styles.modelStage}>
-          <Scene />
+        <div ref={modelStageRef} className={styles.modelStage}>
+          <Scene maintainZoomQuality />
         </div>
 
         <p className={`${styles.title} ${styles.designer}`}>

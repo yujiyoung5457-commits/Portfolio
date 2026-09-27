@@ -70,20 +70,20 @@
 
 .modelStage {
   position: absolute;
+  // 위치: top은 낮출수록 아래로, left는 높일수록 오른쪽으로 이동합니다.
   top: 58%;
   left: 50%;
-  display: grid;
-  width: clamp(92px, 12vw, 130px);
-  aspect-ratio: 1;
-  place-items: center;
-  padding: 12px;
-  background: #e7e7e7;
-  color: var(--color-ink);
-  font-size: clamp(0.9rem, 1.6vw, 1.3rem);
-  font-weight: 700;
-  line-height: 1.22;
-  text-align: center;
+  // 박스 크기: 마지막 값(330px/420px)을 키우면 3D 캔버스가 더 커집니다.
+  width: clamp(190px, 22vw, 330px);
+  height: clamp(230px, 34vw, 420px);
+  // translate 값은 박스의 중심을 top/left 좌표에 맞춥니다.
   transform: translate(-50%, -50%);
+}
+
+.modelStage canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 
@@ -118,7 +118,7 @@
   }
 
   .modelStage {
-    width: 86px;
-    font-size: 0.82rem;
+    width: min(64vw, 260px);
+    height: min(60vw, 320px);
   }
 }
