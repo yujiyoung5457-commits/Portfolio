@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { WeatherAPI } from "./WeatherAPI";
 import styles from "./Movie.module.scss";
 
 export function Movie() {
@@ -41,6 +42,8 @@ export function Movie() {
           allowFullScreen
         />
       </div>
+
+      <WeatherAPI />
 
       <div className={styles.contactDisc}>
         <div className={styles.contactText}>

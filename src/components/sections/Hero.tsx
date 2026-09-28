@@ -8,11 +8,7 @@ import { useLayoutEffect, useRef } from "react";
 import { createHeroVortex } from "./heroVortex";
 import styles from "./Hero.module.scss";
 
-// Hero 스크롤 진행도(0~1) 중 GLB가 급격히 다가오기 시작하는 시점입니다.
-// 값을 높이면 더 마지막에 시작합니다. 예: 0.8 = 마지막 20% 구간부터 시작.
-const MODEL_ZOOM_START = 0.78;
-// 마지막 스크롤 지점의 GLB 확대 배율입니다. 값을 높이면 더 크게 다가옵니다.
-const MODEL_ZOOM_END_SCALE = 3.25;
+const HERO_SCROLL_DISTANCE = "+=275%";
 const introBackgrounds = [
   "/heromain_1.webp",
   "/heromain_2.webp",
@@ -27,13 +23,12 @@ export function Hero() {
   const introPanelRef = useRef<HTMLDivElement>(null);
   const backgroundRefs = useRef<(HTMLImageElement | null)[]>([]);
   const vortexCanvasRef = useRef<HTMLCanvasElement>(null);
-  const modelStageRef = useRef<HTMLDivElement>(null);
+  const modelStageRefs = useRef<(HTMLDivElement | null)[]>([]);
   const vortexRenderRef = useRef<(progress: number) => void>(() => undefined);
   const vortexSupportedRef = useRef(false);
 
   useLayoutEffect(() => {
     const canvas = vortexCanvasRef.current;
-
     if (!canvas) return;
 
     const vortex = createHeroVortex(canvas, "/heromain_6.webp");
@@ -55,65 +50,86 @@ export function Hero() {
       const frames = backgroundRefs.current.filter(
         (frame): frame is HTMLImageElement => frame !== null,
       );
+      const modelStages = modelStageRefs.current.filter(
+        (stage): stage is HTMLDivElement => stage !== null,
+      );
       const vortexCanvas = vortexCanvasRef.current;
+      const [firstModel, secondModel] = modelStages;
+
+      if (!frames.length || !firstModel || !secondModel) return;
 
       gsap.set(frames, { autoAlpha: 0 });
       gsap.set(frames[0], { autoAlpha: 1 });
       gsap.set(vortexCanvas, { autoAlpha: 0 });
-      gsap.set(modelStageRef.current, { scale: 1 });
+      gsap.set(firstModel, { autoAlpha: 1, scale: 1 });
+      gsap.set(secondModel, { autoAlpha: 0, scale: 0.72 });
 
-      let activeFrame = 0;
+      const timeline = gsap.timeline({
+        defaults: { ease: "power1.inOut" },
+        scrollTrigger: {
+          trigger: introPanelRef.current,
+          start: "top top",
+          end: HERO_SCROLL_DISTANCE,
+          pin: true,
+          scrub: 0.38,
+          anticipatePin: 1,
+          onUpdate: (self) => {
+            const progress = self.animation?.progress() ?? self.progress;
+            const vortexProgress = gsap.utils.clamp(0, 1, (progress - 0.82) / 0.18);
 
-      const showFrame = (index: number) => {
-        if (index === activeFrame) return;
+            vortexRenderRef.current(vortexProgress);
 
-        gsap.set(frames, { autoAlpha: 0 });
-        gsap.set(frames[index], { autoAlpha: 1 });
-        activeFrame = index;
-      };
+            if (vortexSupportedRef.current) {
+              gsap.set(vortexCanvas, { autoAlpha: vortexProgress });
+            } else {
+              gsap.set(frames.at(-1) ?? null, {
+                scale: 1 - vortexProgress * 0.92,
+                rotation: vortexProgress * 540,
+                autoAlpha: 1 - vortexProgress,
+              });
+            }
 
-      ScrollTrigger.create({
-        trigger: introPanelRef.current,
-        start: "top top",
-        end: "+=600%",
-        pin: true,
-        anticipatePin: 1,
-        onUpdate: (self) => {
-          // 후반부(MODEL_ZOOM_START 이후)부터 가속해 GLB가 앞으로 다가오는 느낌을 만듭니다.
-          const zoomProgress = gsap.utils.clamp(
-            0,
-            1,
-            (self.progress - MODEL_ZOOM_START) / (1 - MODEL_ZOOM_START),
-          );
-          const acceleratedZoom = zoomProgress ** 2;
-          const modelScale = 1 + (MODEL_ZOOM_END_SCALE - 1) * acceleratedZoom;
-          gsap.set(modelStageRef.current, { scale: modelScale });
-          window.dispatchEvent(new CustomEvent("hero-model-zoom", { detail: modelScale }));
-          const index = Math.min(
-            frames.length - 1,
-            Math.floor(self.progress * (frames.length + 1)),
-          );
-          const vortexProgress = gsap.utils.clamp(
-            0,
-            1,
-            (self.progress - frames.length / (frames.length + 1)) *
-              (frames.length + 1),
-          );
-
-          showFrame(index);
-          vortexRenderRef.current(vortexProgress);
-
-          if (vortexSupportedRef.current) {
-            gsap.set(vortexCanvas, { autoAlpha: vortexProgress > 0 ? 1 : 0 });
-          } else {
-            gsap.set(frames.at(-1) ?? null, {
-              scale: 1 - vortexProgress * 0.92,
-              rotation: vortexProgress * 540,
-              autoAlpha: 1 - vortexProgress,
-            });
-          }
+            const zoomScale = Math.max(
+              1,
+              ...modelStages.map((stage) => Number(gsap.getProperty(stage, "scale"))),
+            );
+            window.dispatchEvent(
+              new CustomEvent("hero-model-zoom", { detail: zoomScale }),
+            );
+          },
         },
       });
+
+      const frameTransitionDuration = 0.12;
+      const frameSequenceEnd = 0.82;
+
+      frames.slice(1).forEach((frame, index) => {
+        const frameIndex = index + 1;
+        const transitionAt =
+          (frameIndex / (frames.length - 1)) * frameSequenceEnd -
+          frameTransitionDuration / 2;
+
+        timeline
+          .to(
+            frames[frameIndex - 1],
+            { autoAlpha: 0, duration: frameTransitionDuration },
+            transitionAt,
+          )
+          .to(
+            frame,
+            { autoAlpha: 1, duration: frameTransitionDuration },
+            transitionAt,
+          );
+      });
+
+      timeline
+        .to(firstModel, { scale: 8.5, duration: 0.46, ease: "power2.in" }, 0)
+        .to(firstModel, { autoAlpha: 0, duration: 0.14 }, 0.32)
+        .to(secondModel, { autoAlpha: 1, scale: 1, duration: 0.13 }, 0.34)
+        .to(secondModel, { scale: 8.5, duration: 0.47, ease: "power2.in" }, 0.43)
+        .to(secondModel, { autoAlpha: 0, duration: 0.14 }, 0.76)
+        .set(firstModel, { autoAlpha: 0, scale: 0.72 }, 0.82)
+        .to(firstModel, { autoAlpha: 1, scale: 1.6, duration: 0.18 }, 0.82);
     }, heroRef);
 
     return () => context.revert();
@@ -152,8 +168,23 @@ export function Hero() {
           Frontend Developer
         </h1>
 
-        <div ref={modelStageRef} className={styles.modelStage}>
-          <Scene maintainZoomQuality />
+        <div className={styles.modelStack}>
+          <div
+            ref={(node) => {
+              modelStageRefs.current[0] = node;
+            }}
+            className={styles.modelStage}
+          >
+            <Scene maintainZoomQuality />
+          </div>
+          <div
+            ref={(node) => {
+              modelStageRefs.current[1] = node;
+            }}
+            className={styles.modelStage}
+          >
+            <Scene modelPath="/second3D.glb" maintainZoomQuality />
+          </div>
         </div>
 
         <p className={`${styles.title} ${styles.designer}`}>
@@ -161,16 +192,19 @@ export function Hero() {
           <span>Web Designer</span>
         </p>
       </div>
-      {/* -------------여기 자막--------------------- */}
-        <div className={styles.subtitle}>
-          <p>Frontend, visualized in form.
-Design, code, structure, and interaction in one object.</p>
-        </div>
+
+      <div className={styles.subtitle}>
+        <p>
+          Frontend, visualized in form. Design, code, structure, and interaction in one
+          object.
+        </p>
+      </div>
+
       <div className={`${styles.panel} ${styles.canvasPanel}`}>
         <Image
           className={styles.background02}
           src="/section01_background02.webp"
-          alt="사이로 바다가 보이는 파란색과 노란색 곡선 천장의 실내 공간"
+          alt="Colorful arched hallway"
           fill
           quality={100}
           sizes="100vw"

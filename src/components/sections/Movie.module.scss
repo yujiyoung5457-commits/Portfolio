@@ -1,9 +1,12 @@
 .section {
   /* 마지막 Movie 섹션의 전체 세로 길이 */
   --movie-section-height: max(300svh, 980px);
+  --movie-intro-height: max(114svh, 372px);
+  --movie-frame-height: max(102svh, 333px);
+  --weather-section-height: clamp(560px, 47vw, 820px);
   // height: 600vh;
   position: relative;
-  height: var(--movie-section-height);
+  height: calc(var(--movie-section-height) + var(--weather-section-height));
   overflow: hidden;
   scroll-margin-top: var(--header-height);
   background: var(--color-blue);
@@ -11,7 +14,7 @@
 
 .intro {
   position: relative;
-  height: 38%;
+  height: var(--movie-intro-height);
   min-height: 360px;
 }
 
@@ -82,7 +85,7 @@
 
 .movieFrame {
   position: relative;
-  height: 34%;
+  height: var(--movie-frame-height);
   min-height: 330px;
   overflow: hidden;
   background-color:var(--color-teal);
@@ -159,6 +162,7 @@
 @media (max-width: 700px) {
   .section {
     --movie-section-height: max(115svh, 820px);
+    --weather-section-height: 0px;
   }
 
   .intro {
