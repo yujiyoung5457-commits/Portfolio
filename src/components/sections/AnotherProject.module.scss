@@ -149,6 +149,11 @@
   line-height: 0.88;
   text-align: center;
 }
+
+.mobilePreview {
+  display: none;
+}
+
 @media (max-width: 800px) {
   .section {
     min-height: 860px;
@@ -276,5 +281,95 @@
     right: -18%;
     bottom: -5%;
     width: min(48vw, 230px);
+  }
+}
+
+@media (max-width: 375px) {
+  .section {
+    height: 100svh;
+    min-height: 100svh;
+    overflow: visible;
+    background: transparent;
+  }
+
+  .wave {
+    display: none;
+  }
+
+  .title {
+    top: 4%;
+    left: 50%;
+    width: max-content;
+    font-size: 2.1rem;
+    transform: translateX(-50%);
+  }
+
+  .artwork {
+    top: 14%;
+    right: 4%;
+    width: 24vw;
+  }
+
+  .projectCard {
+    top: 19%;
+    left: -7%;
+    width: 84vw;
+    padding: 7% 6% 8%;
+    border-width: 10px;
+    transform: none;
+  }
+
+  .projectCard h3 {
+    margin-top: 4%;
+    font-size: 1rem;
+  }
+
+  .projectCard02 {
+    top: 52%;
+    right: -4%;
+    left: auto;
+    width: 29vw;
+    padding: 7% 9% 8%;
+    transform: none;
+  }
+
+  .imagePlaceholder02 {
+    width: 100%;
+  }
+
+  .projectCard02 h3 {
+    margin-top: 3%;
+    font-size: 0.62rem;
+    line-height: 0.9;
+  }
+
+  .mobilePreview {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    overflow: hidden;
+    border-radius: 50%;
+  }
+
+  .mobilePreview img {
+    object-fit: cover;
+  }
+
+  .shoppingPreview {
+    top: 7%;
+    left: 14%;
+    width: 72%;
+    aspect-ratio: 1;
+  }
+
+  .hamsterPreview {
+    top: 25%;
+    left: 25%;
+    width: 50%;
+    aspect-ratio: 1;
+  }
+
+  .nextProject {
+    display: none;
   }
 }

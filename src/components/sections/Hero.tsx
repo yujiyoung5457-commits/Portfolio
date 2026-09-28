@@ -161,7 +161,11 @@ export function Hero() {
           <span>Web Designer</span>
         </p>
       </div>
-
+      {/* -------------여기 자막--------------------- */}
+        <div className={styles.subtitle}>
+          <p>Frontend, visualized in form.
+Design, code, structure, and interaction in one object.</p>
+        </div>
       <div className={`${styles.panel} ${styles.canvasPanel}`}>
         <Image
           className={styles.background02}

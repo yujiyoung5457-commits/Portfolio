@@ -300,3 +300,110 @@
     display: none;
   }
 }
+
+@media (max-width: 375px) {
+  .section,
+  .stage {
+    height: max(190svh, 1200px);
+    min-height: max(190svh, 1200px);
+  }
+
+  .stage {
+    width: 100%;
+  }
+
+  .title {
+    top: 8%;
+    left: 14%;
+    width: max-content;
+    padding-left: 10px;
+    font-size: 3.2rem;
+    transform: none;
+  }
+
+  .project1,
+  .project2,
+  .project3 {
+    right: auto;
+    bottom: auto;
+    transform: none;
+  }
+
+  .project1 {
+    top: 20%;
+    left: 5%;
+  }
+
+  .project2 {
+    top: 44%;
+    right: 8%;
+    left: auto;
+  }
+
+  .project3 {
+    top: 66%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .project1 .placeholder {
+    width: 58vw;
+  }
+
+  .project2 .placeholder {
+    width: 44vw;
+  }
+
+  .project3 .placeholder {
+    width: 72vw;
+  }
+
+  .actions {
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .actions a,
+  .actions button {
+    min-width: 110px;
+    min-height: 40px;
+    padding: 0.6rem 1rem;
+    font-size: 1.1rem;
+  }
+
+  .dot {
+    display: block;
+  }
+
+  .dotLarge {
+    top: 56%;
+    bottom: auto;
+    left: 7%;
+    width: 64px;
+  }
+
+  .dotMedium {
+    top: 22%;
+    right: 22%;
+    bottom: auto;
+    width: 46px;
+  }
+
+  .dotSmall {
+    top: 31%;
+    right: 11%;
+    bottom: auto;
+    width: 22px;
+  }
+
+  .stage::after {
+    position: absolute;
+    top: 48%;
+    left: 8%;
+    width: 25px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--color-yellow);
+    content: "";
+  }
+}

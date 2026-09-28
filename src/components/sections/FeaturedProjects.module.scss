@@ -168,3 +168,47 @@
     right: -82px;
   }
 }
+
+@media (max-width: 375px) {
+  .section {
+    height: 100svh;
+    min-height: 100svh;
+  }
+
+  .center {
+    position: absolute;
+    top: 22%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .title {
+    font-size: clamp(3.4rem, 14.8vw, 3.6rem);
+    line-height: 1.08;
+  }
+
+  .go {
+    margin-top: 46px;
+  }
+
+  .leftArtwork,
+  .rightArtwork {
+    width: 180px;
+    opacity: 1;
+  }
+
+  .leftArtwork {
+    bottom: 8%;
+    left: -82px;
+  }
+
+  .rightArtwork {
+    top: -22px;
+    right: -72px;
+  }
+
+  .dot {
+    right: 16%;
+    bottom: 20%;
+  }
+}

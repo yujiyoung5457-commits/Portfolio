@@ -27,9 +27,19 @@ export default function Home() {
         <TeamProjects />
         <Skills />
         <DesignCode />
-        <AnotherProject />
-        <ArtGalleryHeading />
-        <ArtGallery />
+        <div className={styles.projectFlow}>
+          <svg
+            className={styles.projectFlowBackground}
+            viewBox="0 0 100 1000"
+            preserveAspectRatio="none"
+            aria-hidden="true"
+          >
+            <path d="M0 236 C5 216 8 263 13 239 C18 214 22 264 28 237 C34 211 38 263 44 239 C50 215 55 260 62 245 C68 330 56 391 64 462 C72 535 57 607 65 680 C72 754 58 824 63 884 C66 920 49 958 34 948 C22 939 13 970 0 951 Z" />
+          </svg>
+          <AnotherProject />
+          <ArtGalleryHeading />
+          <ArtGallery />
+        </div>
         <ArtSlider />
         <Movie />
       </main>

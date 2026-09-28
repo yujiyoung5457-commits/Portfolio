@@ -31,6 +31,14 @@ export function AnotherProject() {
       />
 
       <article className={styles.projectCard}>
+        <div className={`${styles.mobilePreview} ${styles.shoppingPreview}`}>
+          <Image
+            src="/reactShoppingmall-cotti.png"
+            alt=""
+            fill
+            sizes="(max-width: 375px) 70vw, 1px"
+          />
+        </div>
         <div className={styles.imagePlaceholder} aria-label="프로젝트 이미지 영역" />
         <h3>
           Shopping
@@ -40,6 +48,14 @@ export function AnotherProject() {
       </article>
 
       <article className={styles.projectCard02}>
+        <div className={`${styles.mobilePreview} ${styles.hamsterPreview}`}>
+          <Image
+            src="/hamstercareImg.png"
+            alt=""
+            fill
+            sizes="(max-width: 375px) 24vw, 1px"
+          />
+        </div>
         <Image
           className={styles.projectCardBackground02}
           src="/section01_background06.webp"

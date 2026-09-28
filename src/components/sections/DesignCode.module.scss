@@ -122,3 +122,49 @@
     height: min(60vw, 320px);
   }
 }
+
+@media (max-width: 375px) {
+  .section {
+    height: max(122svh, 800px);
+    min-height: max(122svh, 800px);
+  }
+
+  .title {
+    top: 13%;
+    right: 8%;
+    left: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    font-size: 2.1rem;
+    line-height: 0.9;
+  }
+
+  .title > div {
+    display: flex;
+    align-items: baseline;
+  }
+
+  .block {
+    position: static;
+  }
+
+  .design,
+  .code {
+    font-size: 1.5em;
+  }
+
+  .flower {
+    position: absolute;
+    top: 28%;
+    left: 50%;
+    width: 88vw;
+    transform: translateX(-50%);
+  }
+
+  .modelStage {
+    top: 58%;
+    width: 52vw;
+    height: 60vw;
+  }
+}

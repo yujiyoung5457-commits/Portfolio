@@ -118,7 +118,16 @@
   background: var(--color-red);
   animation: designer-bar-pass 9s infinite both;
 }
-
+.subtitle{
+  position: absolute;
+  bottom: 2rem ;
+  left: 35%;
+  background-color: #111;
+  padding: 0 2rem;
+  p{
+    color: white;
+  }
+}
 @keyframes developer-bar-pass {
   0%,
   7% {
@@ -353,17 +362,25 @@
   }
 
   .canvasHeading {
-    top: 5.5%;
-    width: 70%;
-    font-size: 1.7rem;
+    top: 7.5%;
+    width: 82%;
+    font-size: clamp(1.65rem, 7.6vw, 1.8rem);
   }
 
   .artwork {
-    top: 17%;
-    height: 52svh;
+    top: 21%;
+    height: min(50svh, 340px);
   }
 
   .code {
-    bottom: 7%;
+    bottom: 5%;
+    width: 100%;
+    font-size: clamp(5.5rem, 25vw, 6.5rem);
+    text-align: center;
+  }
+
+  .canvasPanel {
+    --canvas-panel-height: 100svh;
+    --canvas-background-x: 50%;
   }
 }

@@ -368,3 +368,46 @@
     width: min(88vw, 400px);
   }
 }
+
+@media (max-width: 375px) {
+  .section {
+    height: 100svh;
+    min-height: 100svh;
+  }
+
+  .power {
+    height: 40%;
+  }
+
+  .leftArtwork,
+  .rightArtwork {
+    padding-bottom: 0;
+  }
+
+  .leftArtwork {
+    top: 1.5%;
+    bottom: auto;
+    left: -1%;
+    width: 74vw;
+  }
+
+  .rightArtwork {
+    right: -2%;
+    bottom: 8%;
+    width: 70vw;
+  }
+
+  .mainTitle {
+    top: 45%;
+    width: 78vw;
+    transform: translate(-50%, -50%);
+  }
+
+  .anton {
+    font-size: clamp(2rem, 9vw, 2.15rem);
+  }
+
+  .script {
+    font-size: clamp(2.1rem, 9.5vw, 2.3rem);
+  }
+}

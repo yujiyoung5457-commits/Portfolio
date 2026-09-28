@@ -456,3 +456,94 @@
     font-size: 0.78rem;
   }
 }
+
+@media (max-width: 375px) {
+  .section {
+    --art-gallery-height: 260svh;
+
+    min-height: 260svh;
+    margin-top: 0;
+    overflow: visible;
+    background: transparent;
+  }
+
+  .line {
+    display: none;
+  }
+
+  .shape1 {
+    top: 4%;
+    left: 5%;
+    width: 50%;
+    height: 36svh;
+  }
+
+  .shape2 {
+    top: 31%;
+    left: 8%;
+    width: 84%;
+    height: 20svh;
+  }
+
+  .shape3 {
+    top: 43%;
+    right: 3%;
+    left: auto;
+    width: 48%;
+    height: 42svh;
+  }
+
+  .shape4 {
+    top: 65%;
+    left: 3%;
+    width: 68%;
+    height: 24svh;
+  }
+
+  .frame1 {
+    top: 0;
+    right: 5%;
+    left: auto;
+    transform: none;
+  }
+
+  .frame2 {
+    top: 22%;
+    left: 7%;
+    transform: none;
+  }
+
+  .frame3 {
+    top: 43%;
+    left: 7%;
+    transform: none;
+  }
+
+  .frame4 {
+    top: 70%;
+    right: 5%;
+    left: auto;
+    transform: none;
+  }
+
+  .frame1 .frame1Frame,
+  .frame4 .frame4Frame {
+    width: 43vw;
+  }
+
+  .frame2 .frame2Frame {
+    width: 84vw;
+  }
+
+  .frame3 .frame3Frame {
+    width: 42vw;
+  }
+
+  .frame1Buttons,
+  .frame2Buttons,
+  .frame3Buttons,
+  .frame4Buttons {
+    margin-top: -0.5rem;
+    transform: none;
+  }
+}

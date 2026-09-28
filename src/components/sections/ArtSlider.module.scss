@@ -147,3 +147,14 @@
     bottom: 24px;
   }
 }
+
+@media (max-width: 375px) {
+  .section,
+  .stickyStage {
+    background: var(--color-blue);
+  }
+
+  .powerTop {
+    display: none;
+  }
+}
