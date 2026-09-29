@@ -6,7 +6,7 @@
   --weather-section-height: clamp(560px, 47vw, 820px);
   // height: 600vh;
   position: relative;
-  height: calc(var(--movie-section-height) + var(--weather-section-height));
+  min-height: calc(var(--movie-section-height) + var(--weather-section-height));
   overflow: hidden;
   scroll-margin-top: var(--header-height);
   background: var(--color-blue);
