@@ -1,0 +1,232 @@
+.section {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(6rem, 10vw, 10rem) clamp(1.25rem, 6vw, 8rem)
+    clamp(5rem, 9vw, 10rem);
+  background: var(--color-blue);
+  isolation: isolate;
+}
+
+.flowCanvas {
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: clamp(12rem, 19vw, 22rem);
+  pointer-events: none;
+}
+
+.layout {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(280px, 0.9fr);
+  grid-template-areas:
+    "menus title"
+    "television window";
+  align-items: center;
+  gap: clamp(1.5rem, 4vw, 5rem);
+  width: min(100%, 1500px);
+  margin-inline: auto;
+}
+
+.projectMenus {
+  grid-area: menus;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1.5rem, 5vw, 6rem);
+  align-self: start;
+  padding-inline: clamp(0.5rem, 4vw, 4rem);
+}
+
+.menuGroup {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.menuGroup h3 {
+  margin: 0 0 0.25rem;
+  color: var(--color-cream);
+  font-family: var(--font-anton), Impact, sans-serif;
+  font-size: clamp(1.4rem, 2.3vw, 2.5rem);
+  font-weight: 400;
+  line-height: 1;
+}
+
+.menuGroup button {
+  min-width: clamp(9rem, 13vw, 13rem);
+  padding: 0.55rem 1.25rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--color-teal);
+  color: var(--color-cream);
+  font-family: var(--font-anton), Impact, sans-serif;
+  font-size: clamp(1rem, 1.5vw, 1.55rem);
+  line-height: 1;
+  cursor: default;
+}
+
+.copyMenu button {
+  background: var(--color-red);
+}
+
+.layout h2 {
+  grid-area: title;
+  align-self: start;
+  margin: 0 0 clamp(0.5rem, 1.5vw, 1.5rem);
+  color: var(--color-yellow);
+  font-family: var(--font-anton), Impact, sans-serif;
+  font-size: clamp(3.25rem, 7vw, 8rem);
+  font-weight: 400;
+  line-height: 0.9;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.televisionProject {
+  grid-area: television;
+  min-width: 0;
+}
+
+.television {
+  position: relative;
+  width: 100%;
+  max-width: 760px;
+  aspect-ratio: 1;
+  margin-inline: auto;
+}
+
+.televisionFrame {
+  z-index: 2;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.televisionScreen {
+  position: absolute;
+  z-index: 1;
+  top: 10.5%;
+  left: 9.7%;
+  display: grid;
+  width: 69.5%;
+  height: 58.5%;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 15%;
+  background: #d9d9d9;
+  color: #202020;
+}
+
+.televisionScreen p {
+  margin: 0;
+  font-size: clamp(0.8rem, 1.55vw, 1.65rem);
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+.projectWindow {
+  grid-area: window;
+  align-self: center;
+  width: 100%;
+  overflow: hidden;
+  border: 2px solid #ffaa00;
+  background: var(--color-cream);
+}
+
+.windowBar {
+  position: relative;
+  display: flex;
+  height: clamp(1.5rem, 2.2vw, 2.25rem);
+  align-items: center;
+  justify-content: flex-end;
+  gap: clamp(0.3rem, 0.5vw, 0.55rem);
+  padding-inline: 0.6rem 2.5rem;
+  background: #ffaa00;
+}
+
+.windowBar span:not(.close) {
+  width: clamp(0.55rem, 0.8vw, 0.8rem);
+  aspect-ratio: 1;
+  border-radius: 50%;
+}
+
+.redDot {
+  background: var(--color-red);
+}
+
+.greenDot {
+  background: #159447;
+}
+
+.blueDot {
+  background: #1476d4;
+}
+
+.close {
+  position: absolute;
+  top: 50%;
+  right: 0.35rem;
+  color: var(--color-red);
+  font-family: Arial, sans-serif;
+  font-size: clamp(1.6rem, 2.4vw, 2.35rem);
+  line-height: 1;
+  transform: translateY(-54%);
+}
+
+.windowBody {
+  aspect-ratio: 1.02;
+  background: var(--color-cream);
+}
+
+@media (max-width: 760px) {
+  .section {
+    padding: clamp(6rem, 24vw, 8rem) clamp(1rem, 5vw, 2rem)
+      clamp(4rem, 16vw, 7rem);
+  }
+
+  .flowCanvas {
+    height: clamp(10rem, 38vw, 14rem);
+  }
+
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "title"
+      "menus"
+      "television"
+      "window";
+    gap: clamp(1.5rem, 7vw, 3rem);
+  }
+
+  .layout h2 {
+    margin-bottom: 0;
+    font-size: clamp(3rem, 16vw, 5.5rem);
+  }
+
+  .projectMenus {
+    width: min(100%, 560px);
+    margin-inline: auto;
+    padding-inline: 0;
+  }
+
+  .menuGroup button {
+    min-width: min(38vw, 11rem);
+  }
+
+  .television {
+    width: min(100%, 560px);
+  }
+
+  .televisionScreen p {
+    font-size: clamp(0.8rem, 3.7vw, 1.3rem);
+  }
+
+  .projectWindow {
+    width: min(92%, 500px);
+    margin-inline: auto;
+  }
+}

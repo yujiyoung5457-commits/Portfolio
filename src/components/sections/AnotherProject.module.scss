@@ -78,10 +78,13 @@
 
 .imagePlaceholder {
   width: 90%;
+  height: 90%;
   aspect-ratio: 1;
   flex: 0 0 auto;
   border-radius: 50%;
-  background: var(--color-cream);
+  background-image: url(/reactShoppingmall-cotti.png);
+  background-position: center;
+  background-size: contain;
 }
 
 .projectCard h3 {
@@ -97,7 +100,7 @@
 
 .nextProject {
   right: clamp(-190px, -10vw, -80px);
-  bottom: -18%;
+  bottom: clamp(-120px, -6vw, -60px);
   display: grid;
   width: clamp(230px, 27vw, 420px);
   aspect-ratio: 1;
@@ -106,6 +109,7 @@
 
 .nextPlaceholder {
   width: 72%;
+  height: 72%;
   aspect-ratio: 1;
   border-radius: 50%;
   background: rgb(252 246 235 / 0.24);
@@ -136,7 +140,7 @@
   aspect-ratio: 1;
   flex: 0 0 auto;
   border-radius: 50%;
-  background: var(--color-cream);
+  background: var(--color-cream) url("/hamstercareImg.png") center / cover no-repeat;
 }
 
 .projectCard02 h3 {
@@ -369,6 +373,6 @@
   }
 
   .nextProject {
-    display: none;
+    display: grid;
   }
 }

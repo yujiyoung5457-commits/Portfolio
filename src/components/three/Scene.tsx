@@ -10,11 +10,13 @@ const MAX_PIXEL_RATIO = 2;
 type SceneProps = {
   modelPath?: string;
   maintainZoomQuality?: boolean;
+  contain?: boolean;
 };
 
 export function Scene({
   modelPath = "/POLTFOLIO3D.glb",
   maintainZoomQuality = false,
+  contain = false,
 }: SceneProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -50,6 +52,7 @@ export function Scene({
     scene.add(turntable);
 
     let model: THREE.Object3D | undefined;
+    let fitModelToView = () => {};
     let disposed = false;
 
     new GLTFLoader().load(modelPath, (gltf) => {
@@ -84,10 +87,29 @@ export function Scene({
       const bounds = new THREE.Box3().setFromObject(model);
       const center = bounds.getCenter(new THREE.Vector3());
       const size = bounds.getSize(new THREE.Vector3());
-      const scale = 3.5 / (Math.max(size.x, size.y, size.z) || 1);
 
-      model.position.copy(center).multiplyScalar(-scale);
-      model.scale.setScalar(scale);
+      if (contain) {
+        fitModelToView = () => {
+          if (!model) return;
+
+          const verticalFov = THREE.MathUtils.degToRad(camera.fov);
+          const visibleHeight = 2 * Math.tan(verticalFov / 2) * camera.position.z;
+          const visibleWidth = visibleHeight * camera.aspect;
+          const horizontalSize = Math.max(size.x, size.z) || 1;
+          const scale =
+            Math.min(visibleWidth / horizontalSize, visibleHeight / (size.y || 1)) *
+            0.82;
+
+          model.position.copy(center).multiplyScalar(-scale);
+          model.scale.setScalar(scale);
+        };
+        fitModelToView();
+      } else {
+        const scale = 3.5 / (Math.max(size.x, size.y, size.z) || 1);
+        model.position.copy(center).multiplyScalar(-scale);
+        model.scale.setScalar(scale);
+      }
+
       turntable.add(model);
     });
 
@@ -111,6 +133,7 @@ export function Scene({
       if (sizeChanged || force) {
         camera.aspect = width / height;
         camera.updateProjectionMatrix();
+        fitModelToView();
         renderedWidth = width;
         renderedHeight = height;
       }
@@ -186,7 +209,7 @@ export function Scene({
 
       renderer.dispose();
     };
-  }, [maintainZoomQuality, modelPath]);
+  }, [contain, maintainZoomQuality, modelPath]);
 
   return <canvas ref={canvasRef} aria-label="Rotating 3D portfolio model" />;
 }

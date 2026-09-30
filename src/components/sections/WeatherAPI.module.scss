@@ -130,6 +130,8 @@
 
 .resultShape {
   object-fit: fill;
+  border: 1px solid red;
+  transform: scale(1.5);
 }
 
 .resultContent {

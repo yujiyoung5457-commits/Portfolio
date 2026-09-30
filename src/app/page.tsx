@@ -11,6 +11,7 @@ import { DesignCode } from "@/components/sections/DesignCode";
 import { FeaturedProjects } from "@/components/sections/FeaturedProjects";
 import { Hero } from "@/components/sections/Hero";
 import { Movie } from "@/components/sections/Movie";
+import { MiniProjects } from "@/components/sections/MiniProjects";
 import { Skills } from "@/components/sections/Skills";
 import { TeamProjects } from "@/components/sections/TeamProjects";
 import styles from "./page.module.scss";
@@ -40,6 +41,7 @@ export default function Home() {
           <ArtGalleryHeading />
           <ArtGallery />
         </div>
+        <MiniProjects />
         <ArtSlider />
         <Movie />
       </main>

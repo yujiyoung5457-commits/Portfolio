@@ -71,9 +71,9 @@ export function AnotherProject() {
         </h3>
       </article>
 
-      <div className={styles.nextProject} aria-hidden="true">
+      {/* <div className={styles.nextProject} aria-hidden="true">
         <div className={styles.nextPlaceholder} />
-      </div>
+      </div> */}
     </section>
   );
 }

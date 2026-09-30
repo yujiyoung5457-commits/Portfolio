@@ -114,8 +114,17 @@ export function ArtGallery() {
       {/* 액자 + 액자 안쪽 검정 박스 1 */}
       <div className={styles.frame1}>
         <div className={`${styles.frame} ${styles.frame1Frame}`}>
-          <div className={styles.frameWindow} aria-label="작품 이미지 영역 1" />
-          <Image src="/pt_img/frame02.webp" alt="" fill sizes="28vw" />
+          <div
+            className={`${styles.frameWindow} ${styles.frame1Window}`}
+            aria-label="작품 이미지 영역 1"
+          />
+          <Image
+            className={styles.frameBorder}
+            src="/pt_img/frame02.webp"
+            alt=""
+            fill
+            sizes="28vw"
+          />
         </div>
         <ProjectButtons className={styles.frame1Buttons} />
       </div>
@@ -123,8 +132,17 @@ export function ArtGallery() {
       {/* 액자 + 액자 안쪽 검정 박스 2 */}
       <div className={styles.frame2}>
         <div className={`${styles.frame} ${styles.frame2Frame}`}>
-          <div className={styles.frameWindow} aria-label="작품 이미지 영역 2" />
-          <Image src="/pt_img/frame01.webp" alt="" fill sizes="65rem" />
+          <div
+            className={`${styles.frameWindow} ${styles.frame2Window}`}
+            aria-label="작품 이미지 영역 2"
+          />
+          <Image
+            className={styles.frameBorder}
+            src="/pt_img/frame01.webp"
+            alt=""
+            fill
+            sizes="65rem"
+          />
         </div>
         <ProjectButtons className={styles.frame2Buttons} />
       </div>
@@ -135,8 +153,17 @@ export function ArtGallery() {
       {/* 액자 + 액자 안쪽 검정 박스 3 */}
       <div className={styles.frame3}>
         <div className={`${styles.frame} ${styles.frame3Frame}`}>
-          <div className={styles.frameWindow} aria-label="작품 이미지 영역 3" />
-          <Image src="/pt_img/frame02.webp" alt="" fill sizes="28vw" />
+          <div
+            className={`${styles.frameWindow} ${styles.frame3Window}`}
+            aria-label="작품 이미지 영역 3"
+          />
+          <Image
+            className={styles.frameBorder}
+            src="/pt_img/frame02.webp"
+            alt=""
+            fill
+            sizes="28vw"
+          />
         </div>
         <ProjectButtons className={styles.frame3Buttons} />
       </div>
@@ -150,8 +177,17 @@ export function ArtGallery() {
       {/* 액자 + 액자 안쪽 검정 박스 4 */}
       <div className={styles.frame4}>
         <div className={`${styles.frame} ${styles.frame4Frame}`}>
-          <div className={styles.frameWindow} aria-label="작품 이미지 영역 4" />
-          <Image src="/pt_img/frame02.webp" alt="" fill sizes="28vw" />
+          <div
+            className={`${styles.frameWindow} ${styles.frame4Window}`}
+            aria-label="작품 이미지 영역 4"
+          />
+          <Image
+            className={styles.frameBorder}
+            src="/pt_img/frame02.webp"
+            alt=""
+            fill
+            sizes="28vw"
+          />
         </div>
         <ProjectButtons className={styles.frame4Buttons} />
       </div>

@@ -12,58 +12,12 @@ const SLIDER_IMAGES = Array.from(
 );
 
 export function ArtSlider() {
-  const powerTopRef = useRef<HTMLCanvasElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<HTMLUListElement>(null);
   const dragProxyRef = useRef<HTMLDivElement>(null);
   const previousButtonRef = useRef<HTMLButtonElement>(null);
   const nextButtonRef = useRef<HTMLButtonElement>(null);
-
-  useEffect(() => {
-    const canvas = powerTopRef.current;
-
-    if (!canvas) return;
-
-    const drawPowerTop = () => {
-      const { width, height } = canvas.getBoundingClientRect();
-      const pixelRatio = window.devicePixelRatio || 1;
-
-      canvas.width = Math.round(width * pixelRatio);
-      canvas.height = Math.round(height * pixelRatio);
-
-      const context = canvas.getContext("2d");
-
-      if (!context) return;
-
-      const x = (ratio: number) => width * ratio;
-      const y = (ratio: number) => height * ratio;
-
-      context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
-      context.clearRect(0, 0, width, height);
-      context.fillStyle =
-        getComputedStyle(canvas).getPropertyValue("--color-blue").trim() || "#060a7b";
-
-      context.beginPath();
-      context.moveTo(0, y(0.72));
-      context.bezierCurveTo(x(0.045), y(0.57), x(0.09), y(0.86), x(0.15), y(0.77));
-      context.bezierCurveTo(x(0.17), y(0.56), x(0.22), y(0.43), x(0.28), y(0.56));
-      context.bezierCurveTo(x(0.34), y(0.71), x(0.37), y(0.58), x(0.41), y(0.38));
-      context.bezierCurveTo(x(0.45), y(0.2), x(0.47), y(0.58), x(0.51), y(0.42));
-      context.bezierCurveTo(x(0.55), y(0.25), x(0.575), y(0.16), x(0.59), 0);
-      context.lineTo(width, 0);
-      context.lineTo(width, height);
-      context.lineTo(0, height);
-      context.closePath();
-      context.fill();
-    };
-
-    const resizeObserver = new ResizeObserver(drawPowerTop);
-    resizeObserver.observe(canvas);
-    drawPowerTop();
-
-    return () => resizeObserver.disconnect();
-  }, []);
 
   useEffect(() => {
     const heading = headingRef.current;
@@ -232,14 +186,6 @@ export function ArtSlider() {
 
   return (
     <section className={styles.section} aria-labelledby="art-slider-title">
-      <canvas
-        ref={powerTopRef}
-        className={styles.powerTop}
-        width={7078}
-        height={1925}
-        aria-hidden="true"
-      />
-
       <div ref={stageRef} className={styles.stickyStage}>
         <div ref={headingRef} className={styles.heading}>
           <span aria-hidden="true">&#123;</span>
