@@ -129,10 +129,12 @@
 
   // 액자 1 안쪽 검정 박스: 위 오른쪽 아래 왼쪽
   .frame1Window {
+   
     inset: 5% 7% 5% 7%;
     background-image: url(/bookJS.png);
     background-position: top;
     background-size: cover;
+    
   }
 
 }

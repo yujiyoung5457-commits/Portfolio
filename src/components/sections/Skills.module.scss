@@ -138,6 +138,19 @@
   z-index: 2;
   object-fit: contain;
   object-position: left center;
+  animation: skill-image-change 480ms ease-out both;
+}
+
+@keyframes skill-image-change {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .palette {

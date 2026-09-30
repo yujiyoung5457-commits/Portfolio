@@ -1,8 +1,68 @@
+"use client";
+
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import { WeatherAPI } from "./WeatherAPI";
 import styles from "./Movie.module.scss";
 
+const MOVIE_SLIDES = [
+  {
+    name: "SIMUSIMU-HAE",
+    logo: "/pt_img/simusimu-hae.webp",
+    logoAlt: "Simu Simu Hae",
+    logoWidth: 1466,
+    logoHeight: 760,
+    character: "/honya.png",
+    characterAlt: "Simu Simu Hae characters",
+    characterWidth: 1448,
+    characterHeight: 1086,
+    video: "https://www.youtube.com/embed/ZYUeJoK_saQ?feature=oembed",
+  },
+  {
+    name: "ULSD",
+    logo: "/ulsd-logo.png",
+    logoAlt: "ULSD",
+    logoWidth: 1905,
+    logoHeight: 825,
+    character: "/ulsd-human.png",
+    characterAlt: "ULSD character",
+    characterWidth: 1024,
+    characterHeight: 1110,
+    video: "https://www.youtube.com/embed/PEjg0JYX6GM?feature=oembed",
+  },
+  {
+    name: "BIRTHDAY",
+    logo: "/birthday-logo.png",
+    logoAlt: "Birthday",
+    logoWidth: 1774,
+    logoHeight: 887,
+    character: "/birthday.png",
+    characterAlt: "Birthday character",
+    characterWidth: 1086,
+    characterHeight: 1448,
+    video: "https://www.youtube.com/embed/Cjx-TYS8KYY?feature=oembed",
+  },
+] as const;
+
+// 자동으로 다음 작품으로 넘어가는 시간입니다. 원하는 밀리초 값으로 바꿔도 됩니다.
+const SLIDE_INTERVAL = 6000;
+
 export function Movie() {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const activeSlide = MOVIE_SLIDES[activeIndex];
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setActiveIndex((current) => (current + 1) % MOVIE_SLIDES.length);
+    }, SLIDE_INTERVAL);
+
+    return () => window.clearInterval(timer);
+  }, []);
+
+  const showNextSlide = () => {
+    setActiveIndex((current) => (current + 1) % MOVIE_SLIDES.length);
+  };
+
   return (
     <section className={styles.section} id="contact" aria-label="Movie and contact">
       <div className={styles.intro}>
@@ -16,27 +76,39 @@ export function Movie() {
         </svg>
 
         <Image
+          key={activeSlide.logo}
           className={styles.logo}
-          src="/pt_img/simusimu-hae.webp"
-          alt="Simu Simu Hae"
-          width={1466}
-          height={760}
+          src={activeSlide.logo}
+          alt={activeSlide.logoAlt}
+          width={activeSlide.logoWidth}
+          height={activeSlide.logoHeight}
         />
         <Image
+          key={activeSlide.character}
           className={styles.heroCats}
-          src="/honya.png"
-          alt=""
-          width={450}
-          height={536}
+          src={activeSlide.character}
+          alt={activeSlide.characterAlt}
+          width={activeSlide.characterWidth}
+          height={activeSlide.characterHeight}
         />
+
+        <button
+          className={styles.nextSlide}
+          type="button"
+          onClick={showNextSlide}
+          aria-label="다음 영상 보기"
+        >
+          <span aria-hidden="true">›</span>
+        </button>
       </div>
 
       <div className={styles.movieFrame} aria-label="Movie preview">
         <iframe
+          key={activeSlide.video}
           className={styles.movie}
-          src="https://www.youtube.com/embed/ZYUeJoK_saQ?feature=oembed"
-          title="SIMUSIMU-HAE"
-          aria-label="SIMUSIMU-HAE YouTube video"
+          src={activeSlide.video}
+          title={activeSlide.name}
+          aria-label={`${activeSlide.name} YouTube video`}
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           referrerPolicy="strict-origin-when-cross-origin"
           allowFullScreen

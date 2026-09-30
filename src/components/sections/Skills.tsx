@@ -4,6 +4,9 @@ import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import styles from "./Skills.module.scss";
 
+/* 자동으로 다음 슬라이드로 넘어가는 시간입니다. 4000 = 4초입니다. */
+const SLIDE_INTERVAL_MS = 4000;
+
 /*
  * 각 물감 줄기의 개별 조절값입니다.
  * color: 물감 색상
@@ -11,33 +14,86 @@ import styles from "./Skills.module.scss";
  * thickness: 물감 굵기(px)
  * wave: 위아래로 휘는 정도(px). 0이면 거의 직선입니다.
  */
-const skills = [
-  {
-    name: "React",
-    image: "/pt_img/reactcolor.webp",
-    paint: { color: "#22efc4", length: 680, thickness: 38, wave: 24 },
-  },
-  {
-    name: "TypeScript",
-    image: "/pt_img/ts.webp",
-    paint: { color: "#22efc4", length: 620, thickness: 36, wave: 20 },
-  },
-  {
-    name: "HTML5",
-    image: "/pt_img/htmll.webp",
-    paint: { color: "#22efc4", length: 700, thickness: 40, wave: 26 },
-  },
-  {
-    name: "CSS3",
-    image: "/pt_img/csscolor.webp",
-    paint: { color: "#22efc4", length: 650, thickness: 36, wave: 22 },
-  },
-  {
-    name: "JavaScript",
-    image: "/pt_img/colorjs.webp",
-    paint: { color: "#22efc4", length: 720, thickness: 40, wave: 28 },
-  },
-];
+const skillSlides = [
+  [
+    {
+      name: "React",
+      image: "/pt_img/reactcolor.webp",
+      paint: { color: "#22efc4", length: 680, thickness: 38, wave: 24 },
+    },
+    {
+      name: "TypeScript",
+      image: "/pt_img/ts.webp",
+      paint: { color: "#22efc4", length: 620, thickness: 36, wave: 20 },
+    },
+    {
+      name: "HTML5",
+      image: "/pt_img/htmll.webp",
+      paint: { color: "#22efc4", length: 700, thickness: 40, wave: 26 },
+    },
+    {
+      name: "CSS3",
+      image: "/pt_img/csscolor.webp",
+      paint: { color: "#22efc4", length: 650, thickness: 36, wave: 22 },
+    },
+    {
+      name: "JavaScript",
+      image: "/pt_img/colorjs.webp",
+      paint: { color: "#22efc4", length: 720, thickness: 40, wave: 28 },
+    },
+  ],
+  [
+    {
+      name: "Illustrator",
+      image: "/pt_img/illust.webp",
+      paint: { color: "#ffaa00", length: 680, thickness: 38, wave: 24 },
+    },
+    {
+      name: "InDesign",
+      image: "/pt_img/indesign.webp",
+      paint: { color: "#ffaa00", length: 620, thickness: 36, wave: 20 },
+    },
+    {
+      name: "Figma",
+      image: "/pt_img/figma.webp",
+      paint: { color: "#ffaa00", length: 700, thickness: 40, wave: 26 },
+    },
+    {
+      name: "Premiere",
+      image: "/pt_img/premire.webp",
+      paint: { color: "#ffaa00", length: 650, thickness: 36, wave: 22 },
+    },
+    {
+      name: "React Native",
+      image: "/pt_img/rn.webp",
+      paint: { color: "#ffaa00", length: 720, thickness: 40, wave: 28 },
+    },
+  ],
+  [
+    {
+      name: "Photoshop",
+      image: "/pt_img/photoshop.webp",
+      paint: { color: "#ffffff", length: 680, thickness: 38, wave: 24 },
+    },
+    {
+      name: "Codex",
+      image: "/pt_img/codex.webp",
+      paint: { color: "#ffffff", length: 620, thickness: 36, wave: 20 },
+    },
+    {
+      name: "GPT",
+      image: "/pt_img/gpt.webp",
+      paint: { color: "#ffffff", length: 700, thickness: 40, wave: 26 },
+    },
+    {
+      name: "DaVinci Resolve",
+      image: "/pt_img/davinch.webp",
+      paint: { color: "#ffffff", length: 650, thickness: 36, wave: 22 },
+    },
+  ],
+] as const;
+
+const SKILL_ROW_COUNT = 5;
 
 export function Skills() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -45,6 +101,8 @@ export function Skills() {
   const skillListRef = useRef<HTMLDivElement>(null);
   const titleGraphicRef = useRef<HTMLDivElement>(null);
   const [isPainted, setIsPainted] = useState(false);
+  const [activeSlide, setActiveSlide] = useState(0);
+  const activeSkills = skillSlides[activeSlide];
 
   useEffect(() => {
     const titleGraphic = titleGraphicRef.current;
@@ -58,6 +116,14 @@ export function Skills() {
 
     observer.observe(titleGraphic);
     return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const intervalId = window.setInterval(() => {
+      setActiveSlide((current) => (current + 1) % skillSlides.length);
+    }, SLIDE_INTERVAL_MS);
+
+    return () => window.clearInterval(intervalId);
   }, []);
 
   useEffect(() => {
@@ -91,7 +157,11 @@ export function Skills() {
 
       rows.forEach((row, index) => {
         const rowBounds = row.getBoundingClientRect();
-        const paint = skills[index].paint;
+        const skill = activeSkills[index];
+
+        if (!skill) return;
+
+        const paint = skill.paint;
         const startX = rowBounds.right - sectionBounds.left - 10;
         const startY = rowBounds.top - sectionBounds.top + rowBounds.height / 2;
         const availableLength = Math.max(0, width - startX - 32);
@@ -131,7 +201,7 @@ export function Skills() {
     drawPaint();
 
     return () => resizeObserver.disconnect();
-  }, []);
+  }, [activeSkills]);
 
   return (
     <section
@@ -164,18 +234,30 @@ export function Skills() {
         height={120}
       />
 
-      <div ref={skillListRef} className={styles.skillList}>
-        {skills.map((skill) => (
-          <div className={styles.skillRow} key={skill.name}>
-            <Image
-              className={styles.skillImage}
-              src={skill.image}
-              alt={skill.name}
-              fill
-              sizes="(max-width: 520px) 30vw, 18vw"
-            />
-          </div>
-        ))}
+      <div
+        ref={skillListRef}
+        className={styles.skillList}
+        aria-live="polite"
+        aria-label={`Skill slide ${activeSlide + 1} of ${skillSlides.length}`}
+      >
+        {Array.from({ length: SKILL_ROW_COUNT }, (_, index) => {
+          const skill = activeSkills[index];
+
+          return (
+            <div className={styles.skillRow} key={index}>
+              {skill ? (
+                <Image
+                  key={`${activeSlide}-${skill.name}`}
+                  className={styles.skillImage}
+                  src={skill.image}
+                  alt={skill.name}
+                  fill
+                  sizes="(max-width: 520px) 30vw, 18vw"
+                />
+              ) : null}
+            </div>
+          );
+        })}
       </div>
 
       <Image
