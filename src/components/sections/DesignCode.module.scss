@@ -78,7 +78,7 @@
   height: clamp(300px, 38vw, 480px);
   // translate 값은 박스의 중심을 top/left 좌표에 맞춥니다.
   transform: translate(-50%, -50%) scale(0.75) ;
-   border: 1px solid red;
+  //  border: 1px solid red;
 }
 
 .modelStage canvas {

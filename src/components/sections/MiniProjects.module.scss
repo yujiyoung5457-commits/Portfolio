@@ -36,36 +36,46 @@
   grid-area: menus;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
+  // 두 버튼 그룹 사이의 가로 간격입니다.
   gap: clamp(1.5rem, 5vw, 6rem);
   align-self: start;
+  // 메뉴 묶음 전체의 좌우 위치를 조절합니다. 값을 키우면 중앙 쪽으로 모입니다.
   padding-inline: clamp(0.5rem, 4vw, 4rem);
+  // 메뉴 제목과 버튼 전체의 세로 위치입니다. 값을 키우면 아래로 내려갑니다.
+  transform: translateY(clamp(3.5rem, 6.5vw, 10rem));
+
 }
 
 .menuGroup {
   display: flex;
   align-items: flex-start;
   flex-direction: column;
+  // 한 그룹 안에서 제목과 각 버튼 사이의 세로 간격입니다.
   gap: 0.75rem;
 }
 
 .menuGroup h3 {
+  // 버튼 그룹 제목의 아래 여백입니다.
   margin: 0 0 0.25rem;
   color: var(--color-cream);
   font-family: var(--font-anton), Impact, sans-serif;
-  font-size: clamp(1.4rem, 2.3vw, 2.5rem);
+  // mini projects / copy-site 제목 크기입니다.
+  font-size: clamp(1.25rem, 1.8vw, 2rem);
   font-weight: 400;
   line-height: 1;
 }
 
 .menuGroup button {
-  min-width: clamp(9rem, 13vw, 13rem);
-  padding: 0.55rem 1.25rem;
+  width: fit-content;
+  // 버튼의 위아래 / 좌우 안쪽 여백입니다. 두 번째 값을 키우면 버튼이 길어집니다.
+  padding: 0.8rem 1.3rem;
   border: 0;
   border-radius: 999px;
   background: var(--color-teal);
   color: var(--color-cream);
   font-family: var(--font-anton), Impact, sans-serif;
-  font-size: clamp(1rem, 1.5vw, 1.55rem);
+  // 버튼 글자 크기입니다.
+  font-size: clamp(0.9rem, 1.2vw, 1.25rem);
   line-height: 1;
   cursor: default;
 }
@@ -117,8 +127,9 @@
   place-items: center;
   overflow: hidden;
   border-radius: 15%;
-  background: #d9d9d9;
-  color: #202020;
+  background-image: url(/culcu.png);
+  background-position: center;
+  background-size: cover;
 }
 
 .televisionScreen p {
@@ -211,10 +222,12 @@
     width: min(100%, 560px);
     margin-inline: auto;
     padding-inline: 0;
+    // 모바일 메뉴 묶음의 세로 위치입니다.
+    transform: translateY(1.5rem);
   }
 
   .menuGroup button {
-    min-width: min(38vw, 11rem);
+    max-width: 42vw;
   }
 
   .television {

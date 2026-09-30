@@ -1,16 +1,15 @@
 .section {
   position: relative;
   width: 100%;
-  height: var(--weather-section-height, clamp(560px, 47vw, 820px));
-  min-height: 560px;
+  padding: clamp(2rem, 5vw, 5rem) 0 clamp(4rem, 8vw, 8rem);
   overflow: hidden;
   background: var(--color-blue);
 }
 
 .composition {
-  position: absolute;
-  inset: 0;
-  transform: translateY(2rem);
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
 }
 
 .card {
@@ -73,7 +72,7 @@
 .ribbon {
   position: absolute;
   z-index: 2;
-  top: 3%;
+  top: -2%;
   left: 50%;
   width: min(52vw, 950px);
   aspect-ratio: 1768.56 / 373.44;
@@ -98,7 +97,7 @@
 .windows {
   position: absolute;
   z-index: 1;
-  top: 29%;
+  top: 20%;
   left: 50%;
   display: grid;
   width: min(50vw, 900px);
@@ -121,24 +120,24 @@
 .result {
   position: absolute;
   z-index: 3;
-  bottom: 7%;
+  bottom: 18%;
   left: 50%;
-  width: min(35vw, 640px);
+  width: min(72vw, 1000px);
   aspect-ratio: 1456.68 / 464.64;
   transform: translateX(-50%);
 }
 
 .resultShape {
-  object-fit: fill;
-  border: 1px solid red;
-  transform: scale(1.5);
+  z-index: 0;
+  object-fit: contain;
 }
 
 .resultContent {
   position: absolute;
-  inset: 13% 8%;
+  z-index: 1;
+  inset: 17% 9%;
   display: grid;
-  grid-template-columns: 0.75fr 2fr 1.5fr;
+  grid-template-columns: 0.8fr 2.2fr 1.35fr;
   align-items: center;
   gap: clamp(6px, 0.8vw, 14px);
   color: var(--color-blue);
@@ -153,12 +152,12 @@
 
 .weatherHeading p {
   font-family: var(--font-oleo-script), cursive;
-  font-size: clamp(0.55rem, 0.65vw, 0.8rem);
+  font-size: clamp(0.65rem, 0.85vw, 1rem);
 }
 
 .weatherHeading h3 {
   font-family: var(--font-anton), Impact, sans-serif;
-  font-size: clamp(1rem, 1.5vw, 1.7rem);
+  font-size: clamp(1.1rem, 1.8vw, 2.1rem);
   font-weight: 400;
   line-height: 0.9;
   text-transform: uppercase;
@@ -178,14 +177,14 @@
 .weatherDetails dt {
   color: var(--color-red);
   font-family: var(--font-anton), Impact, sans-serif;
-  font-size: clamp(0.42rem, 0.45vw, 0.58rem);
+  font-size: clamp(0.48rem, 0.62vw, 0.72rem);
   text-transform: uppercase;
 }
 
 .weatherDetails dd {
   margin: 3px 0 0;
   font-family: var(--font-anton), Impact, sans-serif;
-  font-size: clamp(0.52rem, 0.62vw, 0.72rem);
+  font-size: clamp(0.58rem, 0.78vw, 0.9rem);
   overflow-wrap: anywhere;
 }
 
@@ -194,14 +193,14 @@
   flex-direction: column;
   gap: 3px;
   font-family: var(--font-oleo-script), cursive;
-  font-size: clamp(0.48rem, 0.58vw, 0.68rem);
+  font-size: clamp(0.55rem, 0.74vw, 0.86rem);
   line-height: 1.35;
 }
 
 .fortune strong {
   color: var(--color-red);
   font-family: var(--font-anton), Impact, sans-serif;
-  font-size: clamp(0.58rem, 0.72vw, 0.85rem);
+  font-size: clamp(0.66rem, 0.9vw, 1rem);
   font-weight: 400;
   text-transform: uppercase;
 }

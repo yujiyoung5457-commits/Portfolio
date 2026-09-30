@@ -32,7 +32,8 @@ export function MiniProjects() {
       context.fillStyle = "#ffaa00";
 
       const flowPoints = [
-        [1, 0.25],
+        [1, 0],
+        [0.97, 0.25],
         [0.94, 0.5],
         [0.88, 0.43],
         [0.81, 0.68],
@@ -48,7 +49,6 @@ export function MiniProjects() {
       context.beginPath();
       context.moveTo(0, 0);
       context.lineTo(shapeWidth, 0);
-      context.lineTo(x(flowPoints[0][0]), y(flowPoints[0][1]));
 
       for (let index = 1; index < flowPoints.length - 1; index += 1) {
         const [currentX, currentY] = flowPoints[index];
@@ -104,11 +104,7 @@ export function MiniProjects() {
         <article className={styles.televisionProject}>
           <div className={styles.television}>
             <div className={styles.televisionScreen}>
-              <p>
-                프로젝트의 이미지가
-                <br />
-                들어갈 부분
-              </p>
+
             </div>
             <Image
               className={styles.televisionFrame}

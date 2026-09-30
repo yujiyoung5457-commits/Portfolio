@@ -40,8 +40,8 @@ export default function Home() {
           <AnotherProject />
           <ArtGalleryHeading />
           <ArtGallery />
+          <MiniProjects />
         </div>
-        <MiniProjects />
         <ArtSlider />
         <Movie />
       </main>

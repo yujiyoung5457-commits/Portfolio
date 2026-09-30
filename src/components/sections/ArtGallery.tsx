@@ -105,7 +105,11 @@ export function ArtGallery() {
   }, []);
 
   return (
-    <section className={styles.section} aria-labelledby="art-gallery-title">
+    <section
+      className={styles.section}
+      id="art-gallery"
+      aria-labelledby="art-gallery-title"
+    >
       {/* <div className={styles.orangePanel} aria-hidden="true" /> */}
 
       {/* 클리핑 마스크 형태 1: 텍스트가 들어갈 아이보리색 영역 */}
