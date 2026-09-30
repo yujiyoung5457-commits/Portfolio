@@ -50,6 +50,7 @@ async function getWeather(
     windSpeed: data.wind?.speed ?? 0,
     humidity: data.main.humidity ?? 0,
     condition: data.weather?.[0]?.description ?? data.weather?.[0]?.main ?? "Unavailable",
+    conditionGroup: data.weather?.[0]?.main ?? "Clouds",
     precipitation:
       data.rain?.["1h"] ??
       data.snow?.["1h"] ??

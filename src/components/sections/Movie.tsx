@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { WeatherAPI } from "./WeatherAPI";
 import styles from "./Movie.module.scss";
 
@@ -44,20 +44,9 @@ const MOVIE_SLIDES = [
   },
 ] as const;
 
-// 자동으로 다음 작품으로 넘어가는 시간입니다. 원하는 밀리초 값으로 바꿔도 됩니다.
-const SLIDE_INTERVAL = 6000;
-
 export function Movie() {
   const [activeIndex, setActiveIndex] = useState(0);
   const activeSlide = MOVIE_SLIDES[activeIndex];
-
-  useEffect(() => {
-    const timer = window.setInterval(() => {
-      setActiveIndex((current) => (current + 1) % MOVIE_SLIDES.length);
-    }, SLIDE_INTERVAL);
-
-    return () => window.clearInterval(timer);
-  }, []);
 
   const showNextSlide = () => {
     setActiveIndex((current) => (current + 1) % MOVIE_SLIDES.length);

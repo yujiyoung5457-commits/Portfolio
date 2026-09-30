@@ -1,7 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import {
+  type CSSProperties,
+  type PointerEvent as ReactPointerEvent,
+  type WheelEvent as ReactWheelEvent,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import taro from "@/data/taro.json";
 import styles from "./WeatherAPI.module.scss";
 
@@ -12,6 +19,7 @@ type Weather = {
   windSpeed: number;
   humidity: number;
   condition: string;
+  conditionGroup: string;
   precipitation: number;
 };
 
@@ -27,6 +35,25 @@ const WINDOW_IMAGES = [
   "/window02.svg",
 ];
 
+const VISIBLE_CITY_COUNT = 3;
+const CITY_DRAG_THRESHOLD = 22;
+
+function weatherImage(condition: string) {
+  switch (condition.toLowerCase()) {
+    case "clear":
+      return "/clear.webp";
+    case "thunderstorm":
+      return "/Thunderstorm.webp";
+    case "drizzle":
+    case "rain":
+      return "/Rain.webp";
+    case "snow":
+      return "/Snow.webp";
+    default:
+      return "/Clouds.webp";
+  }
+}
+
 function randomTaro() {
   return taro[Math.floor(Math.random() * taro.length)];
 }
@@ -34,6 +61,11 @@ function randomTaro() {
 export function WeatherAPI() {
   const [weather, setWeather] = useState<Weather[]>([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [cityOffset, setCityOffset] = useState(0);
+  const [cityDragY, setCityDragY] = useState(0);
+  const cityDragStartY = useRef<number | null>(null);
+  const cityWasDragged = useRef(false);
+  const lastWheelTime = useRef(0);
   const [fortune, setFortune] = useState(taro[0]);
   const [error, setError] = useState("");
   const [flippedCards, setFlippedCards] = useState<[boolean, boolean]>([
@@ -54,7 +86,8 @@ export function WeatherAPI() {
         }
 
         setWeather(data.weather);
-        setSelectedIndex(Math.floor(Math.random() * data.weather.length));
+        // 첫 화면은 Ansan입니다. 이후 날씨 변경은 도시 버튼 클릭으로만 일어납니다.
+        setSelectedIndex(0);
         setFortune(randomTaro());
       } catch (requestError) {
         if (requestError instanceof DOMException && requestError.name === "AbortError") return;
@@ -72,6 +105,82 @@ export function WeatherAPI() {
   }, []);
 
   const selectedWeather = weather[selectedIndex];
+  const selectedWeatherImage = selectedWeather
+    ? weatherImage(selectedWeather.conditionGroup)
+    : "/Clouds.webp";
+  const visibleCities = Array.from(
+    { length: Math.min(VISIBLE_CITY_COUNT + 2, weather.length) },
+    (_, index) => {
+      const weatherIndex =
+        (cityOffset + index - 2 + weather.length) % weather.length;
+      return { weatherIndex, city: weather[weatherIndex].city };
+    },
+  );
+
+  const selectCity = (weatherIndex: number) => {
+    if (cityWasDragged.current) return;
+
+    setSelectedIndex(weatherIndex);
+    setCityOffset(weatherIndex);
+    setFortune(randomTaro());
+  };
+
+  const moveCityList = (direction: -1 | 1) => {
+    if (!weather.length) return;
+
+    setCityOffset(
+      (current) => (current + direction + weather.length) % weather.length,
+    );
+  };
+
+  const startCityDrag = (event: ReactPointerEvent<HTMLDivElement>) => {
+    cityDragStartY.current = event.clientY;
+    cityWasDragged.current = false;
+  };
+
+  const dragCityList = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (cityDragStartY.current === null) return;
+
+    const distance = event.clientY - cityDragStartY.current;
+    if (Math.abs(distance) >= CITY_DRAG_THRESHOLD) {
+      cityWasDragged.current = true;
+      if (!event.currentTarget.hasPointerCapture(event.pointerId)) {
+        event.currentTarget.setPointerCapture(event.pointerId);
+      }
+    }
+    setCityDragY(Math.max(-48, Math.min(48, distance)));
+  };
+
+  const finishCityDrag = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (cityDragStartY.current === null) return;
+
+    const distance = event.clientY - cityDragStartY.current;
+    const wasDragged = Math.abs(distance) >= CITY_DRAG_THRESHOLD;
+    cityWasDragged.current = wasDragged;
+    if (wasDragged) {
+      moveCityList(distance < 0 ? 1 : -1);
+    }
+
+    cityDragStartY.current = null;
+    setCityDragY(0);
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId);
+    }
+
+    window.setTimeout(() => {
+      cityWasDragged.current = false;
+    }, 0);
+  };
+
+  const scrollCityList = (event: ReactWheelEvent<HTMLDivElement>) => {
+    if (Math.abs(event.deltaY) < 4) return;
+    event.preventDefault();
+
+    const now = Date.now();
+    if (now - lastWheelTime.current < 220) return;
+    lastWheelTime.current = now;
+    moveCityList(event.deltaY > 0 ? 1 : -1);
+  };
   const toggleCard = (cardIndex: 0 | 1) => {
     setFlippedCards((current) =>
       current.map((isFlipped, index) =>
@@ -151,6 +260,16 @@ export function WeatherAPI() {
         <div className={styles.windows} aria-hidden="true">
         {WINDOW_IMAGES.map((src, index) => (
           <div className={styles.window} key={`${src}-${index}`}>
+            {index === 1 && (
+              <Image
+                key={selectedWeatherImage}
+                className={styles.windowWeather}
+                src={selectedWeatherImage}
+                alt=""
+                fill
+                sizes="11vw"
+              />
+            )}
             <Image
               className={styles.windowFrame}
               src={src}
@@ -170,6 +289,37 @@ export function WeatherAPI() {
             <p className={styles.status}>{error}</p>
           ) : selectedWeather ? (
             <>
+              <div
+                className={styles.cityViewport}
+                aria-label="Select a city"
+                onPointerDown={startCityDrag}
+                onPointerMove={dragCityList}
+                onPointerUp={finishCityDrag}
+                onPointerCancel={finishCityDrag}
+                onWheel={scrollCityList}
+              >
+                <div
+                  className={`${styles.cityTrack} ${
+                    cityDragY !== 0 ? styles.cityTrackDragging : ""
+                  }`}
+                  style={{ "--city-drag-y": `${cityDragY}px` } as CSSProperties}
+                >
+                  {visibleCities.map(({ city, weatherIndex }) => (
+                    <button
+                      className={`${styles.cityButton} ${
+                        weatherIndex === selectedIndex ? styles.cityButtonActive : ""
+                      }`}
+                      type="button"
+                      key={`${cityOffset}-${city}`}
+                      aria-pressed={weatherIndex === selectedIndex}
+                      onClick={() => selectCity(weatherIndex)}
+                    >
+                      {city}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
               <div className={styles.weatherHeading}>
                 <p>{selectedWeather.country}</p>
                 <h3>{selectedWeather.city}</h3>
