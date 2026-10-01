@@ -74,6 +74,8 @@
   flex-direction: column;
   align-items: center;
   padding: 7% 9% 8%;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .imagePlaceholder {
@@ -115,17 +117,29 @@
   background: rgb(252 246 235 / 0.24);
 }
 
-.projectCard02 {
+.projectSwapTrigger {
   top: calc(30% + 30rem);
   left: calc(clamp(-84px, -4vw, -20px) + 80rem + clamp(16px, 2vw, 32px));
   position: absolute;
-  z-index: 1;
-  display: flex;
+  z-index: 3;
   width: 35rem;
+  aspect-ratio: 1;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.projectCard02 {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  display: flex;
+  width: 100%;
   aspect-ratio: 1;
   flex-direction: column;
   align-items: center;
   padding: 7% 9% 8%;
+  transform-origin: center;
+  pointer-events: none;
 }
 
 .projectCardBackground02 {
@@ -136,7 +150,7 @@
 
 .imagePlaceholder02 {
   z-index: 1;
-  width: 150%;
+  width: 74%;
   aspect-ratio: 1;
   flex: 0 0 auto;
   border-radius: 50%;
@@ -183,7 +197,7 @@
     width: min(72vw, 570px);
   }
 
-  .projectCard02 {
+  .projectSwapTrigger {
     top: calc(16% + min(21vw, 175px));
     left: calc(-10% + min(72vw, 570px) + 12px);
     width: min(30vw, 220px);
@@ -222,7 +236,7 @@
     width: 88vw;
   }
 
-  .projectCard02 {
+  .projectSwapTrigger {
     top: calc(16% + 28vw);
     left: calc(-19% + 88vw + 10px);
     width: 32vw;
@@ -270,7 +284,7 @@
     transform: translateX(-50%);
   }
 
-  .projectCard02 {
+  .projectSwapTrigger {
     top: 63%;
     left: 50%;
     width: min(68vw, 300px);
@@ -327,7 +341,7 @@
     font-size: 1rem;
   }
 
-  .projectCard02 {
+  .projectSwapTrigger {
     top: 52%;
     right: -4%;
     left: auto;

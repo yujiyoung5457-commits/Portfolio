@@ -162,8 +162,8 @@
 }
 
 .cityViewport {
-  --city-button-height: clamp(24px, 2.15vw, 34px);
-  --city-gap: clamp(4px, 0.45vw, 8px);
+  --city-button-height: clamp(30px, 2.45vw, 42px);
+  --city-gap: clamp(5px, 0.55vw, 10px);
 
   height: calc(
     var(--city-button-height) + var(--city-button-height) +
@@ -198,7 +198,7 @@
 
 .cityButton {
   height: var(--city-button-height);
-  min-width: clamp(62px, 6.2vw, 92px);
+  min-width: clamp(78px, 7vw, 108px);
   flex: 0 0 var(--city-button-height);
   padding: 0 clamp(8px, 0.8vw, 14px);
   border: 0;
@@ -206,7 +206,7 @@
   color: #fff;
   background: var(--color-teal);
   font-family: var(--font-anton), Impact, sans-serif;
-  font-size: clamp(0.62rem, 0.95vw, 1.05rem);
+  font-size: clamp(0.78rem, 1.08vw, 1.3rem);
   line-height: 1.1;
   text-transform: uppercase;
   cursor: pointer;
@@ -215,7 +215,7 @@
 .cityButtonActive {
   color: var(--color-red);
   background: #dfffb7;
-  box-shadow: 0 0 0 3px rgb(255 255 255 / 80%);
+  // box-shadow: 0 0 0 3px rgb(255 255 255 / 80%);
 }
 
 .cityButton:focus-visible {
@@ -232,12 +232,12 @@
 
 .weatherHeading p {
   font-family: var(--font-oleo-script), cursive;
-  font-size: clamp(0.65rem, 0.85vw, 1rem);
+  font-size: clamp(0.8rem, 1vw, 1.2rem);
 }
 
 .weatherHeading h3 {
   font-family: var(--font-anton), Impact, sans-serif;
-  font-size: clamp(1.1rem, 1.8vw, 2.1rem);
+  font-size: clamp(1.4rem, 2.15vw, 2.65rem);
   font-weight: 400;
   line-height: 0.9;
   text-transform: uppercase;
@@ -257,14 +257,14 @@
 .weatherDetails dt {
   color: var(--color-red);
   font-family: var(--font-anton), Impact, sans-serif;
-  font-size: clamp(0.48rem, 0.62vw, 0.72rem);
+  font-size: clamp(0.62rem, 0.75vw, 0.9rem);
   text-transform: uppercase;
 }
 
 .weatherDetails dd {
   margin: 3px 0 0;
   font-family: var(--font-anton), Impact, sans-serif;
-  font-size: clamp(0.58rem, 0.78vw, 0.9rem);
+  font-size: clamp(0.74rem, 0.94vw, 1.1rem);
   overflow-wrap: anywhere;
 }
 
@@ -273,14 +273,14 @@
   flex-direction: column;
   gap: 3px;
   font-family: var(--font-oleo-script), cursive;
-  font-size: clamp(0.55rem, 0.74vw, 0.86rem);
+  font-size: clamp(0.7rem, 0.9vw, 1.05rem);
   line-height: 1.35;
 }
 
 .fortune strong {
   color: var(--color-red);
   font-family: var(--font-anton), Impact, sans-serif;
-  font-size: clamp(0.66rem, 0.9vw, 1rem);
+  font-size: clamp(0.82rem, 1.05vw, 1.2rem);
   font-weight: 400;
   text-transform: uppercase;
 }

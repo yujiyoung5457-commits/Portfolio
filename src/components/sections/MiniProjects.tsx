@@ -1,11 +1,29 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./MiniProjects.module.scss";
+
+const miniProjectItems = [
+  { id: "gray-wall", label: "Gray-wall", image: "/gray.png" },
+  { id: "fruit-animation", label: "fruit animation", image: "/fruit.png" },
+  { id: "calculator", label: "CALCULATOR", image: "/culcu.png" },
+] as const;
+
+const copySiteItems = [
+  { id: "woodin", label: "Woodin", image: "/woodin.png" },
+  { id: "genstar-mate", label: "GenstarMate", image: "/genstar.png" },
+  { id: "fmk", label: "FMK", image: "/FMK.png" },
+] as const;
+
+const projectItems = [...miniProjectItems, ...copySiteItems];
 
 export function MiniProjects() {
   const flowCanvasRef = useRef<HTMLCanvasElement>(null);
+  const [selectedProjectId, setSelectedProjectId] = useState("calculator");
+  const selectedProject =
+    projectItems.find((project) => project.id === selectedProjectId) ??
+    miniProjectItems[2];
 
   useEffect(() => {
     const canvas = flowCanvasRef.current;
@@ -88,23 +106,46 @@ export function MiniProjects() {
         <div className={styles.projectMenus}>
           <div className={styles.menuGroup}>
             <h3>mini projects</h3>
-            <button type="button">Gray-wall</button>
-            <button type="button">fruit animation</button>
-            <button type="button">CALCULATOR</button>
+            {miniProjectItems.map((project) => (
+              <button
+                className={selectedProjectId === project.id ? styles.isActive : ""}
+                type="button"
+                aria-pressed={selectedProjectId === project.id}
+                onClick={() => setSelectedProjectId(project.id)}
+                key={project.id}
+              >
+                {project.label}
+              </button>
+            ))}
           </div>
 
           <div className={`${styles.menuGroup} ${styles.copyMenu}`}>
             <h3>copy-site</h3>
-            <button type="button">Woodin</button>
-            <button type="button">GenstarMate</button>
-            <button type="button">FMK</button>
+            {copySiteItems.map((project) => (
+              <button
+                className={selectedProjectId === project.id ? styles.isActive : ""}
+                type="button"
+                aria-pressed={selectedProjectId === project.id}
+                onClick={() => setSelectedProjectId(project.id)}
+                key={project.id}
+              >
+                {project.label}
+              </button>
+            ))}
           </div>
         </div>
 
         <article className={styles.televisionProject}>
           <div className={styles.television}>
             <div className={styles.televisionScreen}>
-
+              <Image
+                className={styles.screenImage}
+                src={selectedProject.image}
+                alt={`${selectedProject.label} 프로젝트 미리보기`}
+                fill
+                sizes="(max-width: 760px) 70vw, 35vw"
+                key={selectedProject.id}
+              />
             </div>
             <Image
               className={styles.televisionFrame}

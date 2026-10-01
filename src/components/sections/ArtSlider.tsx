@@ -7,7 +7,7 @@ import { useEffect, useRef } from "react";
 import styles from "./ArtSlider.module.scss";
 
 const SLIDER_IMAGES = Array.from(
-  { length: 19 },
+  { length: 37 },
   (_, index) => `/artwork/slider_img/${index + 1}.webp`,
 );
 

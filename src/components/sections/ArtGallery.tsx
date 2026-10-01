@@ -4,11 +4,21 @@ import Image from "next/image";
 import { useEffect, useRef } from "react";
 import styles from "./ArtGallery.module.scss";
 
-function ProjectButtons({ className }: { className: string }) {
+type ProjectButtonsProps = {
+  className: string;
+  liveUrl: string;
+  githubUrl: string;
+};
+
+function ProjectButtons({ className, liveUrl, githubUrl }: ProjectButtonsProps) {
   return (
     <div className={`${styles.buttons} ${className}`}>
-      <span>Live Site</span>
-      <span>Git Hub</span>
+      <a href={liveUrl} target="_blank" rel="noreferrer">
+        Live Site
+      </a>
+      <a href={githubUrl} target="_blank" rel="noreferrer">
+        Git Hub
+      </a>
     </div>
   );
 }
@@ -130,7 +140,11 @@ export function ArtGallery() {
             sizes="28vw"
           />
         </div>
-        <ProjectButtons className={styles.frame1Buttons} />
+        <ProjectButtons
+          className={styles.frame1Buttons}
+          liveUrl="https://dash-125133337.vercel.app/"
+          githubUrl="https://github.com/yujiyoung5457-commits/Dash"
+        />
       </div>
 
       {/* 액자 + 액자 안쪽 검정 박스 2 */}
@@ -148,7 +162,11 @@ export function ArtGallery() {
             sizes="65rem"
           />
         </div>
-        <ProjectButtons className={styles.frame2Buttons} />
+        <ProjectButtons
+          className={styles.frame2Buttons}
+          liveUrl="https://memory-podo-u6zd.vercel.app/"
+          githubUrl="https://github.com/yujiyoung5457-commits/MEMORY-PODO"
+        />
       </div>
 
       {/* 클리핑 마스크 형태 2: 텍스트가 들어갈 아이보리색 영역 */}
@@ -169,7 +187,11 @@ export function ArtGallery() {
             sizes="28vw"
           />
         </div>
-        <ProjectButtons className={styles.frame3Buttons} />
+        <ProjectButtons
+          className={styles.frame3Buttons}
+          liveUrl="https://gb-4lvk.vercel.app/"
+          githubUrl="https://github.com/yujiyoung5457-commits/GB"
+        />
       </div>
 
       {/* 클리핑 마스크 형태 3: 텍스트가 들어갈 아이보리색 영역 */}
@@ -193,7 +215,11 @@ export function ArtGallery() {
             sizes="28vw"
           />
         </div>
-        <ProjectButtons className={styles.frame4Buttons} />
+        <ProjectButtons
+          className={styles.frame4Buttons}
+          liveUrl="https://yujiyoung5457-commits.github.io/piyo/"
+          githubUrl="https://github.com/yujiyoung5457-commits/piyo"
+        />
       </div>
 
       <canvas ref={lineCanvasRef} className={styles.line} aria-hidden="true" />

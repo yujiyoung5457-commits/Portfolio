@@ -77,7 +77,18 @@
   // 버튼 글자 크기입니다.
   font-size: clamp(0.9rem, 1.2vw, 1.25rem);
   line-height: 1;
-  cursor: default;
+  cursor: pointer;
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    filter 180ms ease;
+}
+
+.menuGroup button:hover,
+.menuGroup button.isActive {
+  filter: brightness(1.08);
+  transform: translateX(8px) scale(1.04);
+  box-shadow: 0 5px 0 rgb(0 0 0 / 0.18);
 }
 
 .copyMenu button {
@@ -127,9 +138,72 @@
   place-items: center;
   overflow: hidden;
   border-radius: 15%;
-  background-image: url(/culcu.png);
-  background-position: center;
-  background-size: cover;
+  background: #111;
+}
+
+.screenImage {
+  z-index: 1;
+  object-fit: cover;
+  object-position: center;
+  animation: television-image-change 360ms ease-out both;
+}
+
+.televisionScreen::before,
+.televisionScreen::after {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+}
+
+.televisionScreen::before {
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 3px,
+    rgb(4 8 30 / 0.13) 4px
+  );
+  mix-blend-mode: multiply;
+}
+
+.televisionScreen::after {
+  inset: -4%;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgb(255 255 255 / 0.5) 0 0.6px, transparent 0.9px),
+    radial-gradient(circle at 70% 60%, rgb(0 0 0 / 0.45) 0 0.7px, transparent 1px);
+  background-size: 4px 4px, 5px 5px;
+  opacity: 0.1;
+  mix-blend-mode: overlay;
+  animation: television-noise 180ms steps(2, end) infinite;
+}
+
+@keyframes television-image-change {
+  from {
+    opacity: 0.35;
+    filter: contrast(1.45) brightness(1.3);
+    transform: scale(1.025);
+  }
+
+  to {
+    opacity: 1;
+    filter: none;
+    transform: scale(1);
+  }
+}
+
+@keyframes television-noise {
+  0% {
+    transform: translate3d(-1%, 1%, 0);
+  }
+
+  50% {
+    transform: translate3d(1%, -1%, 0);
+  }
+
+  100% {
+    transform: translate3d(0, 1%, 0);
+  }
 }
 
 .televisionScreen p {
@@ -241,5 +315,12 @@
   .projectWindow {
     width: min(92%, 500px);
     margin-inline: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .screenImage,
+  .televisionScreen::after {
+    animation: none;
   }
 }

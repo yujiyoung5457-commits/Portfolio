@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { gsap } from "gsap";
 import { useEffect, useRef, useState } from "react";
 import styles from "./Skills.module.scss";
 
@@ -95,6 +96,34 @@ const skillSlides = [
 
 const SKILL_ROW_COUNT = 5;
 
+type Point = {
+  x: number;
+  y: number;
+};
+
+const getCubicPoint = (
+  start: Point,
+  control1: Point,
+  control2: Point,
+  end: Point,
+  time: number,
+) => {
+  const inverseTime = 1 - time;
+
+  return {
+    x:
+      inverseTime ** 3 * start.x +
+      3 * inverseTime ** 2 * time * control1.x +
+      3 * inverseTime * time ** 2 * control2.x +
+      time ** 3 * end.x,
+    y:
+      inverseTime ** 3 * start.y +
+      3 * inverseTime ** 2 * time * control1.y +
+      3 * inverseTime * time ** 2 * control2.y +
+      time ** 3 * end.y,
+  };
+};
+
 export function Skills() {
   const sectionRef = useRef<HTMLElement>(null);
   const paintCanvasRef = useRef<HTMLCanvasElement>(null);
@@ -137,7 +166,10 @@ export function Skills() {
       skillList.querySelectorAll<HTMLElement>(`.${styles.skillRow}`),
     );
 
-    const drawPaint = () => {
+    const paintProgress = { value: 0 };
+    let paintTween: gsap.core.Tween | null = null;
+
+    const drawPaint = (progress = paintProgress.value) => {
       const sectionBounds = section.getBoundingClientRect();
       const width = sectionBounds.width;
       const height = sectionBounds.height;
@@ -170,37 +202,84 @@ export function Skills() {
         const endX = startX + length;
         const wave = paint.wave * responsiveScale;
 
+        const points: Point[] = [
+          { x: startX - paint.thickness * 0.25, y: startY },
+          { x: startX + length * 0.2, y: startY - wave },
+          { x: startX + length * 0.42, y: startY + wave },
+          { x: startX + length * 0.62, y: startY + wave * 0.25 },
+          { x: startX + length * 0.78, y: startY - wave * 0.55 },
+          { x: startX + length * 0.9, y: startY - wave * 0.75 },
+          { x: endX, y: startY },
+        ];
+
         context.beginPath();
-        context.moveTo(startX - paint.thickness * 0.25, startY);
-        context.bezierCurveTo(
-          startX + length * 0.2,
-          startY - wave,
-          startX + length * 0.42,
-          startY + wave,
-          startX + length * 0.62,
-          startY + wave * 0.25,
-        );
-        context.bezierCurveTo(
-          startX + length * 0.78,
-          startY - wave * 0.55,
-          startX + length * 0.9,
-          startY - wave * 0.75,
-          endX,
-          startY,
-        );
+        context.moveTo(points[0].x, points[0].y);
+
+        const totalSteps = 100;
+        const visibleSteps = Math.ceil(totalSteps * progress);
+
+        for (let step = 1; step <= visibleSteps; step += 1) {
+          const curveTime = (step / totalSteps) * 2;
+          const point =
+            curveTime <= 1
+              ? getCubicPoint(points[0], points[1], points[2], points[3], curveTime)
+              : getCubicPoint(
+                  points[3],
+                  points[4],
+                  points[5],
+                  points[6],
+                  curveTime - 1,
+                );
+          context.lineTo(point.x, point.y);
+        }
+
         context.strokeStyle = paint.color;
         context.lineWidth = paint.thickness * responsiveScale;
-        context.stroke();
+        if (progress > 0) context.stroke();
       });
     };
 
-    const resizeObserver = new ResizeObserver(drawPaint);
+    const playPaint = () => {
+      paintTween?.kill();
+      paintProgress.value = 0;
+      drawPaint(0);
+
+      paintTween = gsap.to(paintProgress, {
+        value: 1,
+        duration: 1.35,
+        ease: "power2.out",
+        onUpdate: () => drawPaint(),
+      });
+    };
+
+    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const visibilityObserver = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+
+        if (motionQuery.matches) {
+          paintProgress.value = 1;
+          drawPaint(1);
+        } else {
+          playPaint();
+        }
+        visibilityObserver.disconnect();
+      },
+      { threshold: 0.15 },
+    );
+
+    const resizeObserver = new ResizeObserver(() => drawPaint());
     resizeObserver.observe(section);
     resizeObserver.observe(skillList);
     rows.forEach((row) => resizeObserver.observe(row));
-    drawPaint();
+    drawPaint(0);
+    visibilityObserver.observe(section);
 
-    return () => resizeObserver.disconnect();
+    return () => {
+      paintTween?.kill();
+      visibilityObserver.disconnect();
+      resizeObserver.disconnect();
+    };
   }, [activeSkills]);
 
   return (

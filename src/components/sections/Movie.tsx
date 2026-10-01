@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { gsap } from "gsap";
+import { useEffect, useRef, useState } from "react";
 import { WeatherAPI } from "./WeatherAPI";
 import styles from "./Movie.module.scss";
 
@@ -46,7 +47,59 @@ const MOVIE_SLIDES = [
 
 export function Movie() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const squigglePathRef = useRef<SVGPathElement>(null);
   const activeSlide = MOVIE_SLIDES[activeIndex];
+
+  useEffect(() => {
+    const path = squigglePathRef.current;
+    if (!path) return;
+
+    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (motionQuery.matches) return;
+
+    const wave = { phase: 0 };
+
+    const drawWave = () => {
+      const points = Array.from({ length: 73 }, (_, index) => {
+        const x = (1440 / 72) * index;
+        const distanceFromCenter = (x - 720) / 285;
+        const envelope = Math.exp(-(distanceFromCenter ** 2));
+        const signal =
+          Math.sin(x * 0.054 + wave.phase) * 48 +
+          Math.sin(x * 0.105 - wave.phase * 2) * 16;
+        const y = 86 + envelope * signal;
+
+        return { x, y };
+      });
+
+      let d = `M ${points[0].x} ${points[0].y}`;
+
+      for (let index = 1; index < points.length - 1; index += 1) {
+        const point = points[index];
+        const nextPoint = points[index + 1];
+        const midX = (point.x + nextPoint.x) / 2;
+        const midY = (point.y + nextPoint.y) / 2;
+        d += ` Q ${point.x} ${point.y} ${midX} ${midY}`;
+      }
+
+      const lastPoint = points.at(-1);
+      if (lastPoint) d += ` T ${lastPoint.x} ${lastPoint.y}`;
+      path.setAttribute("d", d);
+    };
+
+    drawWave();
+    const tween = gsap.to(wave, {
+      phase: Math.PI * 2,
+      duration: 3.2,
+      ease: "none",
+      repeat: -1,
+      onUpdate: drawWave,
+    });
+
+    return () => {
+      tween.kill();
+    };
+  }, []);
 
   const showNextSlide = () => {
     setActiveIndex((current) => (current + 1) % MOVIE_SLIDES.length);
@@ -61,7 +114,10 @@ export function Movie() {
           preserveAspectRatio="none"
           aria-hidden="true"
         >
-          <path d="M-30 95 C55 8 118 8 104 88 S218 154 258 82 S350 30 340 101 S438 132 493 87 S596 55 611 119 S710 151 742 77 S842 8 854 73 S953 129 1003 70 S1110 14 1123 82 S1222 141 1272 72 S1380 22 1470 89" />
+          <path
+            ref={squigglePathRef}
+            d="M-30 95 C55 8 118 8 104 88 S218 154 258 82 S350 30 340 101 S438 132 493 87 S596 55 611 119 S710 151 742 77 S842 8 854 73 S953 129 1003 70 S1110 14 1123 82 S1222 141 1272 72 S1380 22 1470 89"
+          />
         </svg>
 
         <Image

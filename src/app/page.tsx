@@ -10,6 +10,7 @@ import { CreativeStatement } from "@/components/sections/CreativeStatement";
 import { DesignCode } from "@/components/sections/DesignCode";
 import { FeaturedProjects } from "@/components/sections/FeaturedProjects";
 import { Hero } from "@/components/sections/Hero";
+import { GsapAnimation } from "@/components/sections/GsapAnimation";
 import { Movie } from "@/components/sections/Movie";
 import { MiniProjects } from "@/components/sections/MiniProjects";
 import { Skills } from "@/components/sections/Skills";
@@ -44,6 +45,7 @@ export default function Home() {
         </div>
         <ArtSlider />
         <Movie />
+        <GsapAnimation />
       </main>
       <Footer />
       <FloatingNav />
