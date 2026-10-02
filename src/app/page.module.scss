@@ -2,6 +2,10 @@
   min-width: 320px;
 }
 
+.page > main {
+  background: var(--color-blue);
+}
+
 .projectFlow {
   display: contents;
 }

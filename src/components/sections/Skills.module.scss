@@ -185,7 +185,7 @@
   .section {
     display: grid;
     // 여기가 skills 세로 길이 조정
-    min-height: 1600px;
+    min-height: 1660px;
     grid-template-areas:
       "title title"
       "skills decoration"
@@ -207,13 +207,13 @@
     top: auto;
     left: auto;
     grid-area: title;
-    width: min(82vw, 630px);
+    width: min(82vw, 450px);
     justify-self: start;
   }
 
   .decoration {
     position: relative;
-    top: auto;
+    top: -45%;
     right: auto;
     grid-area: decoration;
     width: min(42vw, 320px);
@@ -222,25 +222,33 @@
 
   .skillList {
     position: relative;
-    top: auto;
+    top: 15%;
     left: auto;
     grid-area: skills;
     width: min(34vw, 260px);
-    gap: 0.75rem;
+    gap: 3rem;
     align-self: start;
     justify-self: start;
   }
 
   .palette {
     position: relative;
-    top: auto;
-    right: auto;
+    top: 40%;
+    right: -30%;
     grid-area: palette;
     width: min(48vw, 360px);
     justify-self: end;
   }
 }
-
+.paintCanvas {
+  position: absolute;
+  z-index: 1;
+  inset: 10;
+  display: block;
+  width: 93%;
+  height: 100%;
+  pointer-events: none;
+}
 @media (max-width: 520px) {
   .section {
     min-height: 820px;
