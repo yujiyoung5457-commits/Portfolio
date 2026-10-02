@@ -115,34 +115,6 @@
   visibility: hidden;
 }
 
-@media (min-width: 701px) and (max-width: 768px) {
-  .stickyStage {
-    min-height: 860px;
-    padding: 2.5rem 0 2rem;
-  }
-
-  .heading {
-    width: min(92vw, 660px);
-    gap: 18px;
-  }
-
-  .heading > span {
-    font-size: clamp(6.5rem, 18vw, 8.5rem);
-  }
-
-  .heading h2 {
-    font-size: clamp(2rem, 5.5vw, 2.7rem);
-  }
-
-  .cards {
-    width: min(55vw, 420px);
-  }
-
-  .actions {
-    bottom: 20px;
-  }
-}
-
 @media (max-width: 700px) {
   .stickyStage {
     min-height: max(calc(100svh - var(--header-height)), 760px);

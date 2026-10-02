@@ -31,17 +31,6 @@
   font-size: 1rem;
 }
 
-@media (min-width: 701px) and (max-width: 768px) {
-  .footer {
-    padding: 0 clamp(2.5rem, 8vw, 4rem);
-  }
-
-  .inner {
-    min-height: 200px;
-    gap: 24px;
-  }
-}
-
 @media (max-width: 375px){
 .footer {
   // border-top: 1px solid var(--color-yellow);
