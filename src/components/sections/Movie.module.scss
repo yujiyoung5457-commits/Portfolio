@@ -184,7 +184,7 @@
   aspect-ratio: 1;
   border-radius: 50%;
   background: var(--color-yellow) url("/section01_background03.webp") center / cover;
-  transform: translateX(-50%);
+  transform: translateX(-50%) translateY(3%);
 }
 
 .contactText {
@@ -198,9 +198,9 @@
   gap: clamp(12px, 1.3vw, 22px);
   color: var(--color-blue);
   font-family: var(--font-anton), Impact, sans-serif;
-  font-size: clamp(1.4rem, 2.5vw, 2.8rem);
+  font-size: clamp(1.8rem, 2.8vw, 3rem);
   text-align: center;
-  transform: translateX(-50%);
+  transform: translateX(-50%)translateY(25%);
 }
 
 .contactText a {
@@ -246,12 +246,12 @@
 
   .contactDisc {
     bottom: -31vw;
-    width: 108vw;
+    width: 110vw;
   }
 
   .contactText {
     top: 14%;
-    font-size: clamp(1rem, 4.2vw, 1.5rem);
+    font-size: clamp(2rem, 5vw, 2.2rem);
   }
 }
 
@@ -272,8 +272,9 @@
   }
 
   .contactDisc {
-    bottom: -56vw;
-    width: 132vw;
+    bottom: -90vw;
+    width: 134vw;
+    border: 1px solid red;
   }
 }
 

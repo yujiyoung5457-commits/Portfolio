@@ -318,6 +318,12 @@
   }
 }
 
+@media (min-width: 701px) and (max-width: 768px) {
+  .section {
+    background: transparent;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .screenImage,
   .televisionScreen::after {

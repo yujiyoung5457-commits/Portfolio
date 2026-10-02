@@ -31,6 +31,14 @@ export default function Home() {
         <DesignCode />
         <div className={styles.projectFlow}>
           <svg
+            className={styles.projectFlowTabletBackground}
+            viewBox="0 0 100 764"
+            preserveAspectRatio="none"
+            aria-hidden="true"
+          >
+            <path d="M0 0 H69.81 C69.81 74 68 129 72 202 C76 276 66 336 72 406 C78 480 76 562 69 614 C65 614 64 634 60 636 C56 638 54 624 50 631 C45 639 44 655 39 660 C34 665 31 648 26 646 C21 644 20 665 15 669 C10 673 8 658 4 660 C2 661 1 668 0 674 Z" />
+          </svg>
+          <svg
             className={styles.projectFlowBackground}
             viewBox="0 0 100 1000"
             preserveAspectRatio="none"

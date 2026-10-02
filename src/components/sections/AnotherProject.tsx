@@ -103,8 +103,8 @@ export function AnotherProject() {
           className={styles.waveImage}
           src="/pt_img/power02.svg"
           alt=""
-          width={7317}
-          height={2249}
+          width={7289}
+          height={3931}
         />
       </div>
 
